@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link rel='stylesheet' type="text/css" href="__PUBLIC__/css/style.css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.min.js"></script>
+<script type="text/javascript">
+	
+
+</script>
+</head>
+<body>
+<div class="main">
+    <div class="pos">添加数据元</div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U('Meta/add')}">
+		<dl>
+			<dt>名称标识：</dt>
+			<dd>
+				<input type="text" name="name" class="inp_large" />（由字母、数字和"_"组成,不能重复）
+			</dd>
+		</dl>
+
+		<dl>
+			<dt>值：</dt>
+			<dd>
+				<textarea name="value" class="tarea_default"></textarea>
+			</dd>
+		</dl>
+		<dl>
+			<dt>分组：</dt>
+			<dd>
+				<input type="text" name="groupid" class="inp_small" value="0" /> (数字)
+			</dd>
+		</dl>	
+
+		</div>
+		<div class="form_b">		
+			<input type="submit" class="btn_blue" id="submit" value="保存">
+			<input type="button" onclick="goUrl('{:U('Meta/index')}')" class="btn_green" value="取消" />
+		</div>
+	   </form>
+	</div>
+
+
+</body>
+</html>

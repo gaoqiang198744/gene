@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link rel='stylesheet' type="text/css" href="__PUBLIC__/css/style.css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.min.js"></script>
+<script type="text/javascript">
+	var data_path = "__DATA__";
+	var tpl_public = "__PUBLIC__";
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/jBox.config.js"></script>
+<script type="text/javascript">
+	$(function(){
+
+		setStyleSelect('1');//默认样式选择
+
+		$("#form_do").submit(function(){
+			var name = $("input[name='name']");
+			if($.trim(name.val())==''){
+				name.parent().find("span").remove().end().append("<span class='error'>名称不能为空</span>");
+				return false;			
+			}else {
+				name.parent().find("span").remove().end();
+			}
+
+		});
+
+    });
+</script>
+
+
+
+</head>
+<body>
+<div class="main">
+    <div class="pos">网站设置<input type="button" onclick="goUrl('{:U('System/index')}')" class="btn_blue" value="配置项管理" style="float:right;"></div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U('System/site')}">
+		<ul class="tabnav">
+			<foreach name='configgroup' item='v'>
+			<li id="tab_setting_{$key}" onclick="switchTab('setting','on',{$groupnum},{$key});" <if condition="$key eq 1"> class="on"</if>>{$v}</li>
+			</foreach>
+		</ul>
+
+		<foreach name='vlist' item='v'>
+		<div id="div_setting_{$key}" <if condition="$key gt 1">style="display:none;"</if>>		
+			<foreach name='v' item='config'>		
+			<dl>
+				<dt>{$config.title}：</dt>
+				<dd>
+					{:get_element_html("config[".$config['name']."]",$config['typeid'], $config['tvalue'], $config['value'])}
+				</dd>
+			</dl>
+			</foreach>
+		</div>
+		</foreach>
+
+
+		</div>
+		<div class="form_b">
+			<input type="submit" class="btn_blue" id="submit" value="保存">
+		</div>
+	   </form>
+	</div>
+
+
+</body>
+</html>

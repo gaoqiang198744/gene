@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{$title}-<yang:sitename /></title>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/main.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/ez.css" />
+</head>
+<body>
+<!-- Layout 2 -->
+<div class="ez-mw wraper">
+	<include file="Public:header" />
+	
+    <!-- Module 2A -->
+	<div class="ez-wr marginT">
+		<div class="ez-fl ez-negmr ez-66">	
+        	<div class="one-box">
+				<h1 id="archive-title">搜索结果</h1>
+				<div id="sub-description">
+				<p>关键词： <span class="red">{$keyword}</span></p>
+				</div>
+			</div>
+			<foreach name='vlist' item='v'>
+			<div class="one-box">
+				<h2 class="one-box-title"><a href="{$v.url}">{$v.title}</a></h2>
+				<div class="post-meta">
+					<span class="meta-date">{$v.publishtime|date='Y年m月d日',###}</span>
+					<span class="meta-category">{$v.catename}</span>
+					<span class="meta-permalink"><a href="{$v.url}">永久链接</a></span>
+				</div>
+				<if condition="!empty($v['litpic'])">
+					<p class="center"><img src="{$v.litpic}" /></p>
+				</if>
+				{$v.description}
+			</div>
+			</foreach>	
+			
+			<div class="pager clearfix">{$page}</div>
+		
+		</div>
+		<include file="Public:left" />
+	</div>
+	
+	<include file="Public:footer" />
+</div>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>后台管理</title>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js"></script>
+<script src="__PUBLIC__/js/frame.js" language="javascript" type="text/javascript"></script>
+<link href="__PUBLIC__/css/frame.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+	function get_cate(){
+		$.get("{:U('Index/getParentCate')}",
+            {
+                'pid' : 0, 
+                'rnd' : Math.floor(111+Math.random()*100000)
+            },
+            function(data){
+                var listUl = $('#dl_items_2_0 ul');
+                if(!isNaN(data.count) && data.count>0){
+                	listUl.text('');
+                }
+                if(data.list && (typeof data.list == 'object')){
+                    $.each(data.list, function(i, v){
+                        var html = '<li><a href="'+v.url+'" target="main">'+v.name+'</a></li>';
+                        listUl.append(html);
+                    });
+                }
+                               
+            },'json');
+	}
+	get_cate();
+</script>
+<!--[if IE 6]>
+<script src="__PUBLIC__/js/DD_belatedPNG_0.0.8a-min.js" language="javascript" type="text/javascript"></script>
+<script>
+  DD_belatedPNG.fix('.nav ul li a,.top_link ul li,background');   /* string argument can be any CSS selector */
+</script>
+<![endif]-->
+</head>
+<body class="showmenu">
+<div class="pagemask"></div>
+<iframe class="iframemask"></iframe>
+<div class="head">
+<div class="top_logo"> <img src="__PUBLIC__/images/main/logo.png" /> </div>
+     <div class="nav" id="nav">
+      <ul>
+      	<foreach name='menu' key='k' item='v'>
+		  <li id="menu_{$k}"><a <empty name='k'>class="thisclass"</empty> href="#" _for="left_menu_{$k}"><b>{$v.name}</b></a></li>
+		</foreach>
+      </ul>
+    </div>
+	 <div class="top_link">
+      <ul>
+	    <li id="i_self">你好，{$Think.session.yang_adm_username}</li>
+		<li id="i_hide_menu"><a href="#" id="togglemenu">隐藏菜单</a></li>
+        <li id="i_home"><a href="{:C('CFG_WEBURL')}" target="_blank">首页</a></li> 
+        <li id="i_help"><a href="{:go_link('http://www.xyhcms.com/')}" target="_blank">帮助</a></li>    
+        <li id="i_exit"><a href="{:U('Login/logout')}" target="_top">退出</a></li>		
+      </ul>
+    </div>
+</div>
+<!-- header end -->
+
+<div class="left">
+<div class="span"></div>
+<div class="menu" id="menu">
+<foreach name='menu' key='k' item='v'>
+<div id="items_left_menu_{$k}">
+	<volist name='v["child"]' key='k2' id='v2'>
+	<dl id="dl_items_{$k2}_{$k}">
+		<dt>{$v2.name}</dt>
+		<dd>
+		<ul>
+
+      <if condition="$v2['id'] eq 7">
+      <volist name='qmenu' key='k3' id='v3'>
+      <li><a href="{:U($v3['module'].'/'.$v3['action'].'', $v3['parameter'])}" target="main">{$v3.name}</a></li>
+      </volist>  
+      <else/>
+      <volist name='v2["child"]' key='k3' id='v3'>
+      <li><a href="{:U($v3['module'].'/'.$v3['action'].'', $v3['parameter'])}" target="main">{$v3.name}</a></li>
+      </volist>
+
+      </if>
+		</ul>
+		</dd>
+	</dl>
+	</volist>	
+	
+</div>
+</foreach>
+<!-- Item End -->
+
+
+</div>
+</div>
+<!-- left end -->
+
+<div class="right">
+	<div class="rightContent">
+	<iframe id="main" name="main" frameborder="0" scrolling="yes" src="{:U('Public/main')}" ></iframe>
+	</div>    
+</div>
+<!-- right end -->
+
+<div class="qucikmenu" id="qucikmenu">
+  <ul>
+<li><a href="content_list.htm" target="main">数据列表</a></li>
+<li><a href="catalog_main.htm" target="main">栏目管理</a></li>
+<li><a href="sys_info.htm" target="main">修改系统参数</a></li>
+  </ul>
+</div>
+<!-- qucikmenu end -->
+</body>
+</html>

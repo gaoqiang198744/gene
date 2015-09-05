@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link rel='stylesheet' type="text/css" href="__PUBLIC__/css/style.css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+ <script language="JavaScript">
+    <!--
+    var URL = '__URL__';
+    var APP	 = '__APP__';
+    var SELF='__SELF__';
+    var PUBLIC='__PUBLIC__';
+    $(function(){
+
+        $("input:radio[name='config[HOME_URL_MODEL]']").click(function(){
+
+            if ( $(this).attr('checked')) {
+            	var val = $(this).val();
+            	if (val == 1 || val ==2 ) {
+					$('#UrlRouter1').show();
+					$('#UrlRouter2').show();
+            	}else {
+					$('#UrlRouter1').hide();
+					$('#UrlRouter2').hide();
+
+            	}
+            }
+            
+        });
+
+      
+    });
+    //-->
+</script>
+<style type="text/css">
+dd.desc{width: 150px; height: 30px; padding: 0px 10px;}
+.inp_w50{width:50px;}
+</style>
+</head>
+<body>
+<div class="main">
+    <div class="pos">伪静态与静态缓存</div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U('System/url')}">		
+		<div class="h3">伪静态</div>
+		<dl>
+			<dt>URL模式：</dt>
+			<dd>
+				<input type="radio" name="config[HOME_URL_MODEL]" value="0" <if condition="$vo['HOME_URL_MODEL'] eq 0">checked="checked"</if>>普通模式
+				<div>URL参数模式：http://www.xyhcms.com/index.php?m=List&a=index&id=1</div> 
+				<input type="radio" name="config[HOME_URL_MODEL]" value="1" <if condition="$vo['HOME_URL_MODEL'] eq 1">checked="checked"</if>>PATHINFO模式 
+				<div>PATHINFO模式：http://www.xyhcms.com/index.php/List/index/id/1</div> 
+				<input type="radio" name="config[HOME_URL_MODEL]" value="2" <if condition="$vo['HOME_URL_MODEL'] eq 2">checked="checked"</if>>REWRITE模式(需要URL_REWRITE支持)
+				<div>REWRITE模式和PATHINFO模式功能一样,需开启URL_REWRITE模块(隐藏index.php),如：<br/>http://www.xyhcms.com/List/index/id/1/</div>
+				<input type="radio" name="config[HOME_URL_MODEL]" value="3" <if condition="$vo['HOME_URL_MODEL'] eq 3">checked="checked"</if>>兼容模式
+				<div>兼容模式：http://www.xyhcms.com/index.php?s=/List/index/id/1</div> 
+			</dd>
+		</dl>
+		<dl>
+			<dt>参数分割符：</dt>
+			<dd>
+				<input type="text" name="config[HOME_URL_PATHINFO_DEPR]" value="{$vo.HOME_URL_PATHINFO_DEPR}" class="inp_small" />
+				<div>针对PATHINFO模式,默认为"/",如改为"-"：http://www.xyhcms.com/index.php/List-index-id-1</div> 
+			</dd>
+		</dl>
+		<div class="h3">开启URL路由(路由规则不熟悉的不要乱改)</div>
+		<dl id="UrlRouter1" <if condition="$vo['HOME_URL_MODEL'] neq 1 && $vo['HOME_URL_MODEL'] neq 2"> style="display:none;"</if>>
+			<dt>开启路由：</dt>
+			<dd>
+				<input type="checkbox" name="config[HOME_URL_ROUTER_ON]" value="1" <if condition="$vo['HOME_URL_ROUTER_ON'] eq 1">checked="checked"</if> />开启
+			</dd>
+		</dl>
+		<dl id="UrlRouter2" <if condition="$vo['HOME_URL_MODEL'] neq 1 && $vo['HOME_URL_MODEL'] neq 2"> style="display:none;"</if>>
+			<dt>路由规则：</dt>
+			<dd>
+				<textarea name="config[HOME_URL_ROUTE_RULES]" class="tarea_default">{$vo.HOME_URL_ROUTE_RULES}</textarea>
+			</dd>
+		</dl>
+		<div class="h3">静态缓存(缓解服务器压力)</div>
+		<dl>
+			<dt>开启静态缓存：</dt>
+			<dd>
+				<input type="checkbox" name="config[HOME_HTML_CACHE_ON]" value="1" <if condition="$vo['HOME_HTML_CACHE_ON'] eq 1">checked="checked"</if> />开启电脑版缓存
+				<input type="checkbox" name="config[MOBILE_HTML_CACHE_ON]" value="1" <if condition="$vo['MOBILE_HTML_CACHE_ON'] eq 1">checked="checked"</if> />开启手机版缓存
+
+			</dd>
+		</dl>
+		<dl>
+			<dt>缓存规则：</dt>
+			<dd>
+			<div>缓存时间(秒)：0为永久缓存</div>
+				<div>
+				<input type="checkbox" name="config[HTML_CACHE_INDEX_ON]" value="1" <if condition="$vo['HTML_CACHE_INDEX_ON'] eq 1">checked="checked"</if> />首页缓存
+				缓存时间：<input type="text" name="config[HTML_CACHE_INDEX_TIME]" class="inp_small" value="{$vo.HTML_CACHE_INDEX_TIME}" />秒
+				</div>
+				<div>
+				<input type="checkbox" name="config[HTML_CACHE_LIST_ON]" value="1" <if condition="$vo['HTML_CACHE_LIST_ON'] eq 1">checked="checked"</if> />栏目缓存
+				缓存时间：<input type="text" name="config[HTML_CACHE_LIST_TIME]" class="inp_small" value="{$vo.HTML_CACHE_LIST_TIME}" />秒
+				</div>
+				<div>
+				<input type="checkbox" name="config[HTML_CACHE_SHOW_ON]" value="1" <if condition="$vo['HTML_CACHE_SHOW_ON'] eq 1">checked="checked"</if> />文章缓存
+				缓存时间：<input type="text" name="config[HTML_CACHE_SHOW_TIME]" class="inp_small" value="{$vo.HTML_CACHE_SHOW_TIME}" />秒
+				</div>
+
+				<div>
+				<input type="checkbox" name="config[HTML_CACHE_SPECIAL_ON]" value="1" <if condition="$vo['HTML_CACHE_SPECIAL_ON'] eq 1">checked="checked"</if> />专题缓存
+				缓存时间：<input type="text" name="config[HTML_CACHE_SPECIAL_TIME]" class="inp_small" value="{$vo.HTML_CACHE_SPECIAL_TIME}" />秒
+				</div>
+				
+			</dd>
+		</dl>
+	
+
+		
+
+		</div>
+		<div class="form_b">
+			<input type="submit" class="btn_blue" id="submit" value="提 交">
+		</div>
+	   </form>
+	</div>
+
+
+</body>
+</html>

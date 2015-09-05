@@ -1,0 +1,360 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link rel='stylesheet' type="text/css" href="__PUBLIC__/css/style.css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.min.js"></script>
+<script type="text/javascript">
+	var data_path = "__DATA__";
+	var tpl_public = "__PUBLIC__";
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/jBox.config.js"></script>
+<script type="text/javascript">
+	$(function(){
+
+		$("#form_do").submit(function(){
+			var name = $("input[name='name']");
+			if($.trim(name.val())==''){
+				name.parent().find("span").remove().end().append("<span class='error'>名称不能为空</span>");
+				return false;			
+			}else {
+				name.parent().find("span").remove().end();
+			}
+
+
+		});
+
+
+		$("input[name='type']").click(function(){
+            //var inputs = $(this).parents('dl').find('dt');
+            var dl = $(this).parents('dl').next();//.find('dt');
+                 
+            if($(this).attr('checked')) {
+                dl.find('dt').html('链接地址：');
+                dl.find('span').hide();
+                //var inputParent = $(this).parents('.app').find('p>input');    
+
+            }else {
+            	dl.find('dt').html('别名(拼音)：');
+            	dl.find('span').show();
+            }
+            
+        });
+		
+		autoHide();
+        function autoHide(){
+
+        	var inputs = $("input[name='type']")
+        	var dl = inputs.parents('dl').next();//.find('dt');
+            
+            if(inputs.attr('checked')) {
+                dl.find('dt').html('链接地址：');
+                dl.find('span').hide();  
+
+            }
+
+
+        }
+
+
+        $("select[name='modelid']").change(function(){
+        	
+			$("select[name='modelid'] option").each(function(i,o){
+			if($(this).attr("selected")){
+				//$(".city").hide();
+				//$(".city").eq(i).show();
+				var styleid = $(this).val();
+				setStyleSelect(styleid);
+				
+			}
+			});
+		});
+		
+		function setStyleSelect(id){
+			var template_list = $("select[name='template_list']");
+        	var template_show = $("select[name='template_show']");
+			switch (id){
+				<foreach name='mlist' key='key' item='v'>				
+				case '{$v.id}':
+					template_list.val("{$v.template_list}");
+					template_show.val("{$v.template_show}");
+				 	break;				 	
+				</foreach>
+			}
+
+		}
+		
+		
+
+    });
+</script>
+<script type="text/javascript">
+$(function () {
+	//缩略图上传
+	var litpic_tip = $(".litpic_tip");
+	var btn = $(".litpic_btn span");
+	$("#fileupload").wrap("<form id='myupload' action='{:U('Public/upload', array('tb' => 2))}' method='post' enctype='multipart/form-data'></form>");
+    $("#fileupload").change(function(){
+    	if($("#fileupload").val() == "") return;
+		$("#myupload").ajaxSubmit({
+			dataType:  'json',
+			beforeSend: function() {
+        		$('#litpic_show').empty();
+				btn.html("上传中...");
+    		},
+			success: function(data) {
+				if(data.state == 'SUCCESS'){					
+					litpic_tip.html(""+ data.info[0].name +" 上传成功("+data.info[0].size+"k)");
+					var img = data.info[0].url;//原图
+					var timg = data.info[0].turl;//缩略图
+					$('#litpic_show').html("<img src='"+timg+"' width='120'>");
+					$("#litpic").val(img);
+				}else {
+					litpic_tip.html(data.state);		
+				}			
+					btn.html("添加缩略图");
+
+			},
+			error:function(xhr){
+				btn.html("上传失败");
+				litpic_tip.html(xhr);
+			}
+		});
+	});
+
+	$('#CK_JumpUrl').click(function(){
+            var inputs = $(this).parents('dl').find('input');
+            if($(this).attr('checked')) {
+                $('#JumpUrlDiv').show();
+
+            }else {
+                $('#JumpUrlDiv').hide();
+            }
+            
+     });
+	
+});
+
+
+
+
+$(function () {
+
+	$('#BrowerPicture').click(function(){
+		$.jBox("iframe:{:U('Public/browseFile', array('stype' => 'picture'))}",{
+			title:'XYHCMS',
+			width: 650,
+   			height: 350,
+    		buttons: { '关闭': true }
+   			}
+		);
+	});	
+
+});
+
+
+function selectPicture(sfile) {
+	$.jBox.tip("选择文件成功");
+	$.jBox.close(true);
+	$("#litpic").val(sfile);
+	$('#litpic_show').html("<img src='"+sfile+"' width='120'>");
+}
+
+
+
+</script>
+</head>
+<body>
+<div class="main">
+    <div class="pos">添加栏目</div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U('Category/edit')}">
+		<ul class="tabnav">
+			<li id="tab_setting_1" onclick="switchTab('setting','on',3,1);" class="on">基本选项</li>
+			<li id="tab_setting_2" onclick="switchTab('setting','on',3,2);">高级设置</li>
+			<li id="tab_setting_3" onclick="switchTab('setting','on',3,3);">权限设置</li>
+		</ul>
+		<div id="div_setting_1">
+		<dl>
+			<dt> 所属栏目：</dt>
+			<dd>
+				<select name="pid">
+					<option value="0">顶级栏目</option>
+					<foreach name='cate' item='v'>
+					<option value="{$v.id}" <if condition="$data.pid eq $v['id']">selected="selected"</if>>{$v.delimiter}{$v.name}</option>
+					</foreach>
+				</select>
+			</dd>
+		</dl>
+		<dl>
+			<dt> 内容模型：</dt>
+			<dd>
+				<select name="modelid">
+					<foreach name='mlist' item='v'>
+					<option value="{$v.id}" <if condition="$data.modelid eq $v['id']">selected="selected"</if>>{$v.name}</option>
+					</foreach>
+				</select>
+			</dd>
+		</dl>
+		<dl>
+			<dt> 栏目名称：</dt>
+			<dd>
+				<input type="text" name="name" class="inp_one" value="{$data.name}" />
+			</dd>
+		</dl>	
+
+		<dl>
+			<dt>外部链接</dt>
+			<dd>
+				<input type="checkbox" name="type" value="1" <if condition='$data.type eq 1'>checked="checked"</if> />外部链接
+			</dd>
+		</dl>	
+		<dl>
+			<dt>别名(拼音)：</dt>
+			<dd>
+				<input type="text" name="ename" class="inp_one" value="{$data.ename}" /><span>只能包含字母，数字</span>
+			</dd>
+		</dl>
+		<dl>
+			<dt>栏目图片：</dt>
+			<dd>
+				<div class="litpic_show">
+				    <div style="float:left;">
+				    <input type="text" class="inp_w250" name="catpic" id="litpic"  value="{$data.catpic}" />
+				    <input type="button" class="btn_blue_b" id="BrowerPicture" value="选择站内图片">
+				    </div>
+						<div class="litpic_btn">
+				        <span>添加图片</span>
+				        <input id="fileupload" type="file" name="mypic">
+				    </div>
+				    <div class="litpic_tip"></div>
+				    <div id="litpic_show">
+				    <if condition="$data['catpic']"><img src="{$data.catpic}" width='120' /></if>
+				    </div>
+				</div>
+			</dd>
+		</dl>	
+		<dl>
+			<dt> 排序：</dt>
+			<dd>
+				<input type="text" name="sort" class="inp_one" value="{$data.sort}" />
+			</dd>
+		</dl>
+		<dl>
+			<dt> 显示：</dt>
+			<dd>
+				<input type="radio" name="status" value="1" <if condition='$data.status eq 1'>checked="checked"</if> />显示
+				<input type="radio" name="status" value="0" <if condition='$data.status eq 0'>checked="checked"</if> />隐藏
+			</dd>
+		</dl>
+		</div>
+
+		<div id="div_setting_2"  style="display:none;">		
+		<dl>
+			<dt>栏目模板：</dt>
+			<dd>
+				<select name="template_list">
+					<foreach name='styleListList' item='v'>
+					<option value="{$v}" <if condition="$data.template_list eq $v">selected="selected"</if>>{$v}</option>
+					</foreach>
+				</select>
+			</dd>
+		</dl>
+		<dl>
+			<dt>内容页模板：</dt>
+			<dd>
+				<select name="template_show">
+					<foreach name='styleShowList' item='v'>
+					<option value="{$v}" <if condition="$data.template_show eq $v">selected="selected"</if>>{$v}</option>
+					</foreach>
+				</select>
+			</dd>
+		</dl>
+		<dl>
+			<dt> Seo标题：</dt>
+			<dd>
+				<input type="text" name="seotitle" class="inp_one" value="{$data.seotitle}" />
+			</dd>
+		</dl>
+		<dl>
+			<dt> 关键词：</dt>
+			<dd>
+				<input type="text" name="keywords" class="inp_one" value="{$data.keywords}" />
+			</dd>
+		</dl>
+		<dl>
+			<dt> 栏目描述：</dt>
+			<dd>
+				<textarea name="description" class="tarea_default">{$data.description}</textarea>
+			</dd>
+		</dl>
+		</div>
+		<div id="div_setting_3" style="display:none;">
+			<dl>
+				<dt>管理员组权限</dt>
+				<dd>
+					<table class="t-list">
+					  <tr>
+					    <th>管理员组名称</th>
+					    <th>查看</th>				    
+					    <th>添加</th>				    
+					    <th>修改</th>				    
+					    <th>删除</th>
+					    <th>移动</th>		    
+					    <th>回收站</th>	    
+					    <th>还原</th>	    
+					    <th>清除</th>
+					  </tr>
+					  <foreach name='roleList' item='v'>	
+					  <tr>
+					    <td>{$v.name}</td>
+					    <td align="center"><input type="checkbox" name="acc_roleid[]" value="index,{$v.id}" <if condition="check_category_access($data['id'],'index',$v['id']) eq 1">checked="checked"</if> /></td>
+					    <td align="center"><input type="checkbox" name="acc_roleid[]" value="add,{$v.id}" <if condition="check_category_access($data['id'],'add',$v['id']) eq 1">checked="checked"</if> /></td>
+					    <td align="center"><input type="checkbox" name="acc_roleid[]" value="edit,{$v.id}" <if condition="check_category_access($data['id'],'edit',$v['id']) eq 1">checked="checked"</if> /></td>
+					    <td align="center"><input type="checkbox" name="acc_roleid[]" value="del,{$v.id}" <if condition="check_category_access($data['id'],'del',$v['id']) eq 1">checked="checked"</if> /></td>
+					    <td align="center"><input type="checkbox" name="acc_roleid[]" value="move,{$v.id}" <if condition="check_category_access($data['id'],'move',$v['id']) eq 1">checked="checked"</if> /></td>
+					    <td align="center"><input type="checkbox" name="acc_roleid[]" value="trach,{$v.id}" <if condition="check_category_access($data['id'],'trach',$v['id']) eq 1">checked="checked"</if> /></td>
+					    <td align="center"><input type="checkbox" name="acc_roleid[]" value="restore,{$v.id}" <if condition="check_category_access($data['id'],'restore',$v['id']) eq 1">checked="checked"</if> /></td>
+					    <td align="center"><input type="checkbox" name="acc_roleid[]" value="clear,{$v.id}" <if condition="check_category_access($data['id'],'clear',$v['id']) eq 1">checked="checked"</if> /></td>
+					  </tr>
+					  </foreach>
+					</table>
+					
+				</dd>
+			</dl>
+			<dl>
+				<dt>会员组权限</dt>
+				<dd>
+					<table class="t-list">
+					  <tr>
+					    <th>会员组名称</th>
+					    <th>允许访问</th>
+					  </tr>
+					  <foreach name='groupList' item='v'>	
+					  <tr>
+					    <td>{$v.name}</td>
+					    <td align="center"><input type="checkbox" name="acc_groupid[]" value="visit,{$v.id}" <if condition="check_category_access($data['id'], 'visit', $v['id'], 0) eq 1">checked="checked"</if> /></td>
+					  </tr>
+					  </foreach>
+					</table>
+					
+				</dd>
+			</dl>
+		</div>
+
+
+		</div>
+		<div class="form_b">
+			<input type="hidden" name="id" value="{$data.id}"/>			
+			<input type="hidden" name="oldmodelid" value="{$data.modelid}"/>
+			<input type="submit" class="btn_blue" id="submit" value="提 交">
+		</div>
+	   </form>
+	</div>
+
+
+</body>
+</html>

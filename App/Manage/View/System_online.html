@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link rel='stylesheet' type="text/css" href="__PUBLIC__/css/style.css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<style type="text/css">
+dd.desc{width: 150px; height: 30px; padding: 0px 10px;}
+.inp_w50{width:50px;}
+</style>
+</head>
+<body>
+<div class="main">
+    <div class="pos">在线客服设置</div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U('System/online')}">		
+		<div class="h3">显示状态</div>
+		<dl>
+			<dt>显示状态：</dt>
+			<dd>
+				<input type="radio" name="config[ONLINE_CFG_MODE]" value="1" <if condition="$vo['ONLINE_CFG_MODE'] eq 1">checked="checked"</if>>显示
+				<input type="radio" name="config[ONLINE_CFG_MODE]" value="0" <if condition="$vo['ONLINE_CFG_MODE'] eq 0">checked="checked"</if>>隐藏 
+			
+			</dd>
+		</dl>
+		<dl>
+			<dt>样式：</dt>
+			<dd>
+				<select name="config[ONLINE_CFG_STYLE]" class="inp_w250">
+					<foreach name='onlineStyleList' item='v'>
+					<option value="{$v}" <if condition="$vo['ONLINE_CFG_STYLE'] eq $v">selected="selected"</if>>{$v}</option>
+					</foreach>
+				</select>
+			</dd>
+		</dl>
+		<div class="h3">设置显示位置</div>
+		<dl>
+			<dt>水平位置：</dt>
+			<dd>
+				<input type="radio" name="config[ONLINE_CFG_H]" value="0" <if condition="$vo['ONLINE_CFG_H'] eq 0">checked="checked"</if>>左对齐　
+				<input type="radio" name="config[ONLINE_CFG_H]" value="1" <if condition="$vo['ONLINE_CFG_H'] eq 1">checked="checked"</if>>右对齐　
+				<input type="radio" name="config[ONLINE_CFG_H]" value="2" <if condition="$vo['ONLINE_CFG_H'] eq 2">checked="checked"</if>>水平居中　
+				与边界的距离：<input type="text" name="config[ONLINE_CFG_H_MARGIN]" class="inp_small" value="{$vo.ONLINE_CFG_H_MARGIN}" />像素
+			</dd>
+		</dl>
+		<dl>
+			<dt>垂直位置：</dt>
+			<dd>
+				<input type="radio" name="config[ONLINE_CFG_V]" value="0" <if condition="$vo['ONLINE_CFG_V'] eq 0">checked="checked"</if>>顶部对齐
+				<input type="radio" name="config[ONLINE_CFG_V]" value="1" <if condition="$vo['ONLINE_CFG_V'] eq 1">checked="checked"</if>>底部对齐
+				<input type="radio" name="config[ONLINE_CFG_V]" value="2" <if condition="$vo['ONLINE_CFG_V'] eq 2">checked="checked"</if>>垂直居中　
+				与边界的距离：<input type="text" name="config[ONLINE_CFG_V_MARGIN]" class="inp_small" value="{$vo.ONLINE_CFG_V_MARGIN}" />像素
+			</dd>
+		</dl>
+		
+		<div class="h3">客服号码</div>
+		<dl>
+			<dt>说明</dt>
+			<dd>
+				一行一个QQ号(包括说明,分隔符为$$$),如 307299635$$$点击咨询
+			</dd>
+		</dl>
+		<dl>
+			<dt>QQ：</dt>
+			<dd>
+				<textarea name="config[ONLINE_CFG_QQ]" class="tarea_default">{$vo.ONLINE_CFG_QQ}</textarea>
+			</dd>
+		</dl>
+		<dl>
+			<dt>旺旺：</dt>
+			<dd>
+				<textarea name="config[ONLINE_CFG_WANGWANG]" class="tarea_default">{$vo.ONLINE_CFG_WANGWANG}</textarea>
+			</dd>
+		</dl>
+
+		<div class="h3">显示电话</div>
+		<dl>
+			<dt>显示电话：</dt>
+			<dd>
+				<input type="radio" name="config[ONLINE_CFG_PHONE_ON]" value="1" <if condition="$vo['ONLINE_CFG_PHONE_ON'] eq 1">checked="checked"</if>>显示
+				<input type="radio" name="config[ONLINE_CFG_PHONE_ON]" value="0" <if condition="$vo['ONLINE_CFG_PHONE_ON'] eq 0">checked="checked"</if>>隐藏 
+			
+			</dd>
+		</dl>
+		<dl>
+			<dt>电话号码：</dt>
+			<dd>
+				<input type="text" name="config[ONLINE_CFG_PHONE]"  class="inp_one" value="{$vo.ONLINE_CFG_PHONE}" >
+			
+			</dd>
+		</dl>
+
+		<div class="h3">显示留言</div>
+		<dl>
+			<dt>显示留言：</dt>
+			<dd>
+				<input type="radio" name="config[ONLINE_CFG_GUESTBOOK_ON]" value="1" <if condition="$vo['ONLINE_CFG_GUESTBOOK_ON'] eq 1">checked="checked"</if>>显示
+				<input type="radio" name="config[ONLINE_CFG_GUESTBOOK_ON]" value="0" <if condition="$vo['ONLINE_CFG_GUESTBOOK_ON'] eq 0">checked="checked"</if>>隐藏 
+			
+			</dd>
+		</dl>
+
+		<div class="h3">参数设置(不熟悉的，请不要动)</div>
+		<dl>
+			<dt>QQ参数：</dt>
+			<dd>
+				<textarea name="config[ONLINE_CFG_QQ_PARAM]" class="tarea_default">{$vo.ONLINE_CFG_QQ_PARAM}</textarea>			
+			</dd>
+		</dl>
+		<dl>
+			<dt>旺旺参数：</dt>
+			<dd>
+				<textarea name="config[ONLINE_CFG_WANGWANG_PARAM]" class="tarea_default">{$vo.ONLINE_CFG_WANGWANG_PARAM}</textarea>			
+			</dd>
+		</dl>
+		
+
+		</div>
+		<div class="form_b">
+			<input type="submit" class="btn_blue" id="submit" value="提 交">
+		</div>
+	   </form>
+	</div>
+
+
+</body>
+</html>
