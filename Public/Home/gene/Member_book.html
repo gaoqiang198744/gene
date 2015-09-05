@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{$title}-<yang:sitename /></title>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js" ></script>
+<link href="__PUBLIC__/css/css.css" rel="stylesheet" type="text/css" />
+
+
+</head>
+
+<body>
+<!--top -->
+<div id="top">
+<include file="Public:header" />
+
+<div class="warp1 mt">
+	<include file="Public:announce" />
+</div>
+<div class="clear"></div>
+
+</div>
+
+<div class="content">
+	<div class="warp1 mt">
+	<include file="Member:left" />
+<div class="right f_r">
+<h3 class="nybt"><span>个人中心</span></h3>
+<div class="form">
+	<form method='post' id="form_do" name="form_do" action="">		
+		<div class="h3">{$title}</div>
+		<dl>
+			<dt>姓名：</dt>
+			<dd><input type="text" name="realname" class="inp_one" /></dd>
+		</dl>
+		<dl>
+			<dt>电话：</dt>
+			<dd>
+				<input type="text" name="telephone" class="inp_one" />
+			</dd>
+		</dl>
+
+		<dl>
+			<dt>省/直辖市：</dt>
+			<dd>
+                            <select name="province" id="p"><option></option></select>
+			</dd>
+		</dl>
+                <dl>
+			<dt>城市/区：</dt>
+			<dd>
+                            <select name="city" id="c"><option></option></select>
+			</dd>
+		</dl>
+<!--		<dl>
+			<dt>区县：</dt>
+			<dd>
+                            <select name="district"><option></option></select>
+			</dd>
+		</dl>-->
+		<dl>
+			<dt>详细地址：</dt>
+			<dd>
+				<input type="text" name="address" class="inp_one" />
+			</dd>
+		</dl>
+                <dl>
+			<dt>取样时间：</dt>
+			<dd>
+				<input type="text" name="book_time" class="inp_one" />
+			</dd>
+		</dl>
+		<div class="form_b">
+			<input type="submit" class="btn_blue" id="submit" value="确定">		
+		</div>
+	</form>
+
+	</div>
+
+</div>
+<div class=" clear"></div>
+</div>
+</div>
+
+<include file="Public:footer" />
+<script type="text/javascript" src="__ROOT__/Data/resource/js/city.js"></script>
+<script type="text/javascript"> 
+    setcity();
+</script>
+</body>
+</html>

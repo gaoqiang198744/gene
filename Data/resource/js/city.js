@@ -1,8 +1,10 @@
 function setcity() {
     //var SelP=document.getElementsByName(arguments[0])[0];
     //var SelC=document.getElementsByName(arguments[1])[0];
-	var SelP=document.getElementsByName('p')[0];
-    var SelC=document.getElementsByName('c')[0];
+	//var SelP=document.getElementsByName('p')[0];
+    //var SelC=document.getElementsByName('c')[0];
+	var SelP=document.getElementsByName('province')[0];
+    var SelC=document.getElementsByName('city')[0];
     var DefP=arguments[2];
     var DefC=arguments[3];var provinceOptions = new Array("请选择省份",0,"北京",1,"上海",2,"天津",3,"重庆",4,"广东",5,"福建",6,"浙江",7,"江苏",8,"山东",9,"辽宁",10,"江西",11,"四川",12,"陕西",13,"湖北",14,"河南",15,"河北",16,"山西",17,"内蒙古",18,"吉林",19,"黑龙江",20,"安徽",21,"湖南",22,"广西",23,"海南",24,"云南",25,"贵州",26,"西藏",27,"甘肃",28,"宁夏区",29,"青海",30,"新疆",31,"香港",32,"澳门",33,"台湾",34,"海外",60 );
     SelP.options.length = 0;     
@@ -11,11 +13,10 @@ function setcity() {
         if(SelP.options[i].value==DefP) {
             SelP.selectedIndex = i;
         }
-    }
-
+    }	
     SelP.onchange = function(){
         switch (SelP.value) {case "1" :
-var cityOptions = new Array("东城区",101,"西城区",102,"崇文区",103,"宣武区",104,"朝阳区",105,"海淀区",106,"丰台区",107,"石景山区",108,"门头沟区",109,"房山区",110,"通区",111,"顺义区",112,"昌平区",113,"大兴区",114,"平谷县",115,"怀柔县",116,"密云县",117,"延庆县",118 );
+var cityOptions = new Array("东城区",101,"西城区",102,"朝阳区",105,"海淀区",106,"丰台区",107,"石景山区",108,"门头沟区",109,"房山区",110,"通区",111,"顺义区",112,"昌平区",113,"大兴区",114,"平谷区",115,"怀柔区",116,"密云县",117,"延庆县",118 );
  break;
 case "2" :
 var cityOptions = new Array("黄浦区",201,"卢湾区",202,"徐汇区",203,"长宁区",204,"静安区",205,"普陀区",206,"闸北区",207,"虹口区",208,"杨浦区",209,"宝山区",210,"闵行区",211,"嘉定区",212,"浦东新区",213,"松江区",214,"金山区",215,"青浦区",216,"南汇区",217,"奉贤区",218,"崇明县",219 );
@@ -106,18 +107,6 @@ var cityOptions = new Array("西宁",3001,"海东地区",3002,"海北",3003,"黄
  break;
 case "31" :
 var cityOptions = new Array("乌鲁木齐",3101,"克拉玛依",3102,"石河子",3103,"吐鲁番",3104,"哈密地区",3105,"和田地区",3106,"阿克苏",3107,"喀什地区",3108,"克孜勒苏",3109,"巴音郭楞",3110,"昌吉",3111,"博尔塔拉",3112,"伊犁",3113 );
- break;
-case "32" :
-var cityOptions = new Array("香港岛",3201,"九龙",3202,"新界",3203 );
- break;
-case "33" :
-var cityOptions = new Array("澳门半岛",3301,"离岛",3302 );
- break;
-case "34" :
-var cityOptions = new Array("台北",3401,"高雄",3402,"台南",3403,"台中",3404,"金门县",3405,"南投县",3406,"基隆",3407,"新竹",3408,"嘉义",3409,"新北",3410,"宜兰县",3411,"新竹县",3412,"桃园县",3413,"苗栗县",3414,"彰化县",3415,"嘉义县",3416,"云林县",3417,"屏东县",3418,"台东县",3419,"花莲县",3420,"澎湖县",3421 );
- break;
-case "60" :
-var cityOptions = new Array("美国",6001,"英国",6002,"法国",6003,"俄罗斯",6004,"加拿大",6005,"巴西",6006,"澳大利亚",6007,"印尼",6008,"马来西亚",6009,"新加坡",6010,"菲律宾",6011,"越南",6012,"印度",6013,"日本",6014,"韩国",6015,"泰国",6016,"缅甸",6017,"其他",6018 );
  break;
         default:
             var cityOptions = new Array("");

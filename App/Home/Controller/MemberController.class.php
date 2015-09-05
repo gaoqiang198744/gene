@@ -186,50 +186,52 @@ class MemberController extends HomeCommonController {
 		$this->assign('title', '基本资料');
 		$this->display();
 	}
-        public function check() {
+        public function book() {
 		$uid = get_cookie('uid');
 		if (IS_POST) {
-			$oldpassword = I('oldpassword', '');
-			$password = I('password', '');
-			$repassword = I('repassword', '');
-			if (empty($oldpassword)) {
-				$this->error('请填写旧密码！');
+			$realname = I('realname', '');
+			$telephone = I('telephone', '');
+			$province = I('province', '');
+                        $city = I('city', '');
+                        $district = I('district', '0');
+                        $address = I('address', '');
+                        $book_time = I('book_time', '');
+			if (empty($realname)) {
+				$this->error('请填写真实姓名！');
 			}
-			if (empty($password)) {
-				$this->error('请填写新密码！');
+			if (empty($telephone)) {
+				$this->error('请填写联系电话！');
 			}
-
-			if ($password != $repassword) {
-				$this->error('两次密码不一样，请重新填写！');
+                        if (empty($province)) {
+				$this->error('请选择省/城市！');
 			}
-			
-			$self = M('member')->field(array('email', 'password' ,'encrypt'))->where(array('id' => $uid))->find();
-			if (!$self) {
-				$this->error('用户不存在，请重新登录');
+			if (empty($address)) {
+				$this->error('请填写地址！');
 			}
-
-			if (get_password($oldpassword, $self['encrypt']) != $self['password']) {
-				$this->error('旧密码错误');
+			if (empty($book_time)) {
+				$this->error('请填写预约时间！');
 			}
-
-			$passwordinfo = get_password($password);
-
 			$data = array(
-				'id'		=> $uid,
-				'password'		=> $passwordinfo['password'],		
-				'encrypt'		=> $passwordinfo['encrypt']
+				'member_id'		=> $uid,
+                                'realname'		=> $realname,
+				'telephone'		=> $telephone,		
+				'province'		=> $province,
+                                'city'		        => $city,
+                                'district'		=> $district,
+                                'address'		=> $address,
+                                'book_time'		=> $book_time,
 				);
-
-			if (false !== M('member')->save($data)) {
-				$this->success('修改密码成功', U(MODULE_NAME. '/Member/password'));
+                        print_r($data);exit;
+			if (false !== M('check')->add($data)) {
+				$this->success('预约成功', U(MODULE_NAME. '/Member/password'));
 			}else {
 
-				$this->error('修改密码失败');
+				$this->error('预约失败');
 			}
 			exit();
 		}
 
-		$this->assign('title', '修改密码');
+		$this->assign('title', '预约取样');
 		$this->display();
 	}
 

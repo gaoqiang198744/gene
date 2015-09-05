@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{$title}-<yang:sitename /></title>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js" ></script>
+<link href="__PUBLIC__/css/css.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<!--top -->
+<div id="top">
+<include file="Public:header" />
+
+<div class="warp1 mt">
+	<include file="Public:announce" />
+</div>
+<div class="clear"></div>
+
+</div>
+
+<div class="content">
+	<div class="warp1 mt">
+
+<div class="left f_l">
+	<h3 class="flbt">搜索中心</h3>
+	<div class="xbox">
+	<form id="SearchForm" name="SearchForm" method="post" action="{$searchurl}">
+	<ul class="searchFormDiv">
+	<li>
+	  <select name="modelid">
+	  	<yang:datatable table='model' field='id,name' where='id != 2' orderby='id' limit='30'>
+	  	<option value="{$datatable.id}" <if condition='$datatable.id eq $modelid'>selected="selected"</if>>{$datatable.name|str_replace='模型','',###}</option>
+		</yang:datatable>
+	   </select>
+	</li>
+	<li>
+	  <input name="keyword" type="text" id="keyword"  value="<if condition='empty($keyword)'>请输入关键词<else/>{$keyword}</if>" onfocus="if(this.value=='请输入关键词'){this.value='';}" onblur="if(this.value==''){this.value='请输入关键词';}" />
+	</li>
+	<li>
+	  <input type="submit" value="查询" class="btn_green"/></li>
+	</ul>
+    </form>
+	</div>
+</div>
+<div class="right f_r">
+	<h3 class="nybt"><span>搜索结果</span></h3>
+	<div class="xbox wzzw ">	
+	<div class="search_title">关键词： <span class="red">{$keyword}</span></div>
+	
+	<ul class="wzli">
+	<if condition='empty($keyword)'>
+	<div>请输入关键词，然后点搜索！</div>
+	<else/>	
+	<foreach name='vlist' item='v'>
+	<li><span>{$v.publishtime|date='Y-m-d',###}</span><a href="{$v.url}" target="_blank">{$v.title}</a></li>
+	</foreach>
+	</if>
+	
+	</ul>
+
+	<!--分页 -->
+	<div class="scott mt">{$page}
+	<div class="clear"></div>
+	</div>
+	
+	</div>
+	</div>
+<div class=" clear"></div>
+</div>
+</div>
+
+<include file="Public:footer" />
+</body>
+</html>
