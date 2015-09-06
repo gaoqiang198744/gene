@@ -6,92 +6,137 @@
 <title>{$title}-<yang:sitename /></title>
 <meta name="keywords" content="{$keywords}" />
 <meta name="description" content="{$description}" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!--webfonts-->
+<link href='http://fonts.useso.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text.css'/>
+<link href="__PUBLIC__/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="__PUBLIC__/css/magnific-popup.css" rel="stylesheet" type="text/css"/>
+<link href="__PUBLIC__/css/edit.css" rel="stylesheet" type="text/css" media="all" />
 <script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js" ></script>
-<link href="__PUBLIC__/css/css.css" rel="stylesheet" type="text/css" />
+
 </head>
-
-<body>
+<body>   
 <!--top -->
-<div id="top">
 <include file="Public:header" />
+<!--topend-->
 
-<div class="warp1 mt">
-	<include file="Public:announce" />
+<!-- start-blog -->
+<div class="blog">
+	<div class="main">
+		<div class="wrap">
+			<div class="single-top">
+				<div class="wrapper_single">
+                                	<yang:list typeid="$cid" pagesize='15' pageroll='4'>	
+					<div class="wrapper_top">
+						<div class="grid_1 alpha">
+							<div class="date">
+								<span>
+								{$list.day}
+								</span>
+								{$list.month}月
+							</div>
+						</div>
+					 	<div class="content span_2_of_single">
+						   	<h5 class="blog_title"><a href="{$list.url}">{$list.title}</a></h5>
+								<div class="content">
+									<div class="span-1-of-1">
+										<a href="{$list.url}"><img class="m_img"  src="{$list.litpic}" alt=""/></a>
+									</div>
+									<div class="span-1-of-2">
+                                                                        {$artlist.description}						 				
+						 				<a href="{$list.url}" class="arrow_btn">了解详情</a>
+						 			</div>
+						 			<div class="clear"> </div>
+								</div>
+
+						</div>
+						<div class="clear"> </div>
+					</div>
+                                        </yang:list>
+                                        {$page}
+
+
+				</div>
+
+
+				<div class="rsidebar span_1_of_3">
+					<div class="search_box">
+						<form>
+							   <input type="text" value="搜索" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = 'Search';}"><input type="submit" value="">
+						</form>
+					</div>
+
+          <div class="social_2">
+            <h4>关注我们</h4>
+	          <ul>
+					    <li class="facebook"><a href="#"><span> </span></a></li>
+					    <li class="twitter"><a href="#"><span> </span></a></li>
+                                            <li class="google"><a href="#"><span> </span></a></li>
+					  </ul>
+		 	  	</div>
+
+		 	  	<div class="Categories">
+				 <h4>分类</h4>                                              
+                                    <ul class="sidebar">
+                                                <if condition="$flag_son">
+                                               <yang:catlist typeid='$cid' type='son' flag='1'>
+                                                 <div class="hover"><li><a href="{$catlist.url}">{$catlist.name}</a></li></div>
+                                                </yang:catlist>
+                                                <else/>                                          
+                                                    <if condition = "$cate['pid'] gt 0">
+                                                       <yang:catlist typeid="$cate['pid']" type='son' flag='1'>
+                                                       <div class="hover"><li><a href="{$catlist.url}">{$catlist.name}</a></li></div>
+                                                       </yang:catlist>
+                                                    </if>
+                                               </if>                                                                                    
+                                    </ul>
+			    </div>
+
+	        <div class="popularpost">
+	        	<h4>最热的文章</h4>
+                        <yang:artlist limit='1' pagesize='0' titlelen='16'>
+	        	<div class="image">
+	        		<a href="{$artlist.url}"><img src="{$artlist.litpic}"/></a>
+	        	</div>
+	        	{$artlist.description}
+	        	<div class="link_1">
+	        		<p><a href="{$artlist.url}">{$artlist.month}月 {$artlist.day} </a></p>
+	        		<a href="{$artlist.url}" class="arrow_btn right">了解详情</a>
+	        		<div class="clear"> </div>
+	        	</div>
+                      </yang:artlist>
+	        </div>
+                    
+	        <div class="tags">
+	        	<h4>标签</h4>
+	        	<ul>
+	        		<li><a href="#">基因检测</a></li>
+	        		<li><a href="#">疾病</a></li>
+	        		<li><a href="#">运动</a></li>
+	        		<li><a href="#">营养</a></li>
+	        		<li><a href="#">减肥</a></li>
+	        		<li><a href="#">健康</a></li>
+	        		<li><a href="#">美容</a></li>
+	        		<li><a href="#">基因检测</a></li>
+	        		<li><a href="#">疾病</a></li>
+	        		<li><a href="#">运动</a></li>
+	        		<li><a href="#">营养</a></li>
+	        		<li><a href="#">减肥</a></li>
+	        		<li><a href="#">健康</a></li>
+	        		<li><a href="#">美容</a></li>
+	        		<div class="clear"> </div>
+	        	</ul>
+	        </div>
+				</div>
+
+				<div class="clear"> </div>
+			</div>
+
+<!-- //End-content -->
+		</div>
+	</div>
 </div>
-<div class="clear"></div>
-
-</div>
-
-<div class="content">
-	<div class="warp1 mt">
-
-<div class="left f_l">
-
-	<if condition="$flag_son">
-	<h3 class="flbt">栏目列表</h3>
-	<div class="xbox">
-	<ul class="fllb">
-		<yang:catlist typeid='$cid' type='son' flag='1'>
-		<li><a href="{$catlist.url}">{$catlist.name}</a></li>
-		</yang:catlist>
-	</ul>
-	</div>
-	<div class="mt"></div>
-	<else/>
-	<if condition = "$cate['pid'] gt 0">
-	<h3 class="flbt">栏目列表</h3>
-	<div class="xbox">
-	<ul class="fllb">
-		<yang:catlist typeid="$cate['pid']" type='son' flag='1'>
-		<li><a href="{$catlist.url}">{$catlist.name}</a></li>
-		</yang:catlist>
-	</ul>
-	</div>
-	<div class="mt"></div>
-	</if>
-	</if>
-
-	<div class="">
-	<h3 class="left_bt">联系我们</h3>
-	<div class="xbox left_contactbox">
-	  <p>联系地址：<yang:address /><br />
-	  电话：<yang:phone /></p>
-	</div>
-	</div>
-
-	<div class="mt">
-	<h3 class="left_bt">最新文章</h3>
-	<div class="xbox left_box" id="abt">
-	<ul class="sywz">
-	
-	<yang:artlist limit='6' titlelen='16'>
-	<li><a href="{$artlist.url}">{$artlist.title}</a></li>
-	</yang:artlist>
-	</ul>
-	</div>
-	</div>	
-</div>
-<div class="right f_r">
-	<h3 class="nybt"><i>您当前的位置：<yang:position /> </i><span>{$cate.name}</span></h3>
-	<div class="xbox wzzw ">
-	
-	<ul class="wzli">	
-	<yang:list typeid="$cid" pagesize='15' pageroll='4'>
-	<li><span>{$list.publishtime|date='Y-m-d',###}</span><a href="{$list.url}">{$list.title}</a></li>
-	</yang:list>
-	
-	</ul>
-	<!--分页 -->
-	<div class="scott mt">{$page}
-	<div class="clear"></div>
-	</div>
-	
-	</div>
-	</div>
-<div class=" clear"></div>
-</div>
-</div>
-
 <include file="Public:footer" />
 </body>
 </html>

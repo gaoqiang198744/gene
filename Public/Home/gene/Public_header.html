@@ -7,48 +7,14 @@ $(function(){
 			$('#top_login_ok').show();
 			$('#top_login_no').hide();
 			//$('#top_login_ok').find('span');
-			$('#top_login_ok>span').html('欢迎您，'+data.nickname);
+			//$('#top_login_ok>span').html('欢迎您，'+data.nickname);
 		}else {			
 			$('#top_login_ok').hide();
 			$('#top_login_no').show();
 		}
-	},'json');	
+	},'json');
 });
 </script>
-<!--<div class="warp" id="herd">
-	<div id="top_fla">
-	<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="998" height="159">
-	  <param name="movie" value="__PUBLIC__/images/top.swf" />
-	  <param name="quality" value="high" />
-	  <PARAM NAME=wmode value="transparent">
-	  <embed src="__PUBLIC__/images/top.swf" quality="high" wmode="transparent" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="998" height="159"></embed>
-	</object>
-	</div>
-	<div id="top_member">
-		<!--<a href="{:U(MODULE_NAME.'/Product/basket')}">购物车</a>
-		<div id="top_login_no">
-		<a href="{:U(MODULE_NAME.'/Public/register')}">会员注册</a>	
-		<a href="{:U(MODULE_NAME.'/Public/login')}">会员登录</a>	
-		<span>欢迎您，游客！您可以选择</span>	
-		</div>
-		<div id="top_login_ok" style="display:none;">
-		<a href="{:U(MODULE_NAME.'/Member/index')}">会员中心</a>	
-		<a href="{:U(MODULE_NAME.'/Public/logout')}">安全退出</a>
-		<span>欢迎您， </span>
-		</div>
-			
-	</div>
-	<div id="top_logo"><a href="<yang:siteurl />"></a></div>
-</div>-->
-<!--menu -->
-<!--<div id="menu">
-	<ul>
-		<li><a href="<yang:siteurl />">首 页</a></li>
-		<yang:navlist typeid='0'>
-		<li><a href='{$navlist.url}'>{$navlist.name}</a></li>
-		</yang:navlist>
-	</ul>
-</div>-->
 <!-- start header -->
 <div class="header_bg">
     <div class="wrap">
@@ -56,21 +22,22 @@ $(function(){
             <header id="topnav">
                 <nav class="clearfix">
                     <ul class="fl-l">
-                        <li class="active"><a class="scroll" href="index.php">首页</a></li>
-                        <li><a  href="products.html">产品服务</a></li>
-                        <li><a class="scroll" href="#portfolio">用户中心</a></li>
-                        <li><a class="scroll" href="#team">关于我们</a></li>
-                        <li><a href="blogsingle.html">健康知识</a></li>
-                        <li><a  class="scroll" href="#contact">联系预约</a></li>
+                        <li class="m"><a  href="index.php">首页</a></li>
+                        <li class="m"><a  href="products.html">产品服务</a></li>
+                        <li class="m"><a href="{:U(MODULE_NAME.'/Member/index')}">用户中心</a></li>
+                        <li class="m"><a  href="#team">关于我们</a></li>
+                        <li class="m"><a  href="{:U(MODULE_NAME.'/List/index/cid/1')}" >健康知识</a></li>
+                        <li class="m"><a  class="scroll" href="#contact">联系预约</a></li>
                         <div class="clear"> </div>
                     </ul>
-                    <div class="nav-login-area fl-r">
-                        <a href="">登录</a>|<a href="">注册</a>
+                    <div class="nav-login-area fl-r"  id="top_login_no">
+                        <a href="{:U(MODULE_NAME.'/Public/login')}">登录</a>|<a href="{:U(MODULE_NAME.'/Public/register')}">注册</a>
                     </div>
-
+                    <div class="nav-login-area fl-r" id="top_login_ok" style="display:none;">
+                        <a href="{:U(MODULE_NAME.'/Public/logout')}">安全退出</a>
+                    </div>  
                 </nav>
-                <div class="logo"><a href="index.php"><img src="__PUBLIC__/images/u-logo2.png"/></div>
-                <a href="#" id="navbtn">Nav Menu</a>
+                <div class="logo"><a href="index.php"><img src="__PUBLIC__/images/u-logo2.png"/></div>              
                 <div class="clear"> </div>
             </header><!-- @end #topnav -->
             <script type="text/javascript"  src="__PUBLIC__/js/menu.js"></script>

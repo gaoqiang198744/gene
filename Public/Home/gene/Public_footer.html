@@ -1,6 +1,77 @@
-<div class="warp1 mt" id="bottom">
-	<a href="<yang:siteurl />"><yang:sitename /></a>版权所有
-	<br />
-	联系地址：<yang:address />  电话：<yang:phone /><br />
-	Copyright © 版权所有 
+<!-- start-contact -->
+<div class="contact" id="contact">
+  <div class="wrap">
+    <h2>联系我们</h2>
+    <div class="contact-form">
+      <div class="para-contact">
+        <h4>景堂健康管理科技有限公司</h4>
+        <p>为您和家人的健康保驾护航，制定优良方案</p>
+                <p>合作医院及科研组织：</p>
+
+        <div class="social_2">
+                <ul>
+              <li><a href="#"><img src="__PUBLIC__/images/gongsi1.png" /></a></li>
+              <li><a href="#"><img src="__PUBLIC__/images/gongsi1.png" /></a></li>
+            <li><a href="#"><img src="__PUBLIC__/images/gongsi1.png" /></a></li>
+            </ul>
+        </div>
+          <div class="get-intouch-left-address">
+          <p>网站：www.weixin.com</p>
+          <p>客服电话：4001234567  (9:00 -- 21:00)</p>
+          <p>微信公众号：jingtangvip<br/>
+                        <img src="__PUBLIC__/images/code-web.png" width="120px" />
+                    </p>
+          <p>Copyright©2015 景唐科技版权所有 京ICP备15012481号-3</p>
+        </div>
+        <div class="clear"> </div>
+      </div>
+
+      <div class="form">
+          <form method="post" action="#">
+            <input type="text" class="textbox" value="留下您的姓名" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = 'Name';}">
+            <input type="text" class="textbox" value="留下您的联络邮箱" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = 'Email';}">
+          <div class="clear"> </div>
+            <div>
+              <textarea placeholder="想要对我们说的话" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = ' Message';}"></textarea>
+            </div>
+          <div class="button send_button">
+            <input type="submit" value="发送">
+          </div>
+          <div class="clear"> </div>
+        </form>
+      </div>
+
+      <a class="mov-top" href="#home1"> <span> </span></a>
+        <div class="clear"> </div>
+    </div>
+    </div>
 </div>
+     <!-- scroll_top_btn -->
+    <script type="text/javascript" src="__PUBLIC__/js/move-top.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/easing.js"></script>
+      <script type="text/javascript">
+      $(document).ready(function() {
+
+        var defaults = {
+            containerID: 'toTop', // fading element id
+          containerHoverID: 'toTopHover', // fading element hover id
+          scrollSpeed: 1200,
+          easingType: 'linear'
+        };
+
+
+        $().UItoTop({ easingType: 'easeOutQuart' });
+
+      });
+    </script>
+    <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      $(".scroll").click(function(event){
+        event.preventDefault();
+        $('html,body').animate({scrollTop:$(this.hash).offset().top},1200);
+      });
+    });
+  </script>
+
+     <a href="#" id="toTop" style="display: block;"><span id="toTopHover" style="opacity: 1;"></span></a>
+<!-- //end-contact -->

@@ -221,7 +221,7 @@ class Yang extends TagLib {
 	if ($flag > 0) {	
 		\$where['_string'] = 'article.flag & $flag = $flag ';	
 	}
-
+                       
 	//分页
 	if ($pagesize > 0) {
 		
@@ -250,14 +250,15 @@ class Yang extends TagLib {
 	
 
 	\$_artlist = D2('ArcView','article')->nofield('content')->where(\$where)->order("$orderby")->limit(\$limit)->select();
-
+                        
 	if (empty(\$_artlist)) {
 		\$_artlist = array();
 	}
 	
 
 	foreach(\$_artlist as \$autoindex => \$artlist):	
-
+        \$artlist['month']=date('m',\$artlist['updatetime']);
+        \$artlist['day']=date('d',\$artlist['updatetime']);
 	\$_jumpflag = (\$artlist['flag'] & B_JUMP) == B_JUMP? true : false;
 	\$artlist['url'] = get_content_url(\$artlist['id'], \$artlist['cid'], \$artlist['ename'], \$_jumpflag, \$artlist['jumpurl']);
 
@@ -267,7 +268,7 @@ class Yang extends TagLib {
 ?>
 str;
 	$str .= $content;
-	$str .='<?php endforeach;?>';
+	$str .='<?php endforeach;?>';       
 	return $str;
 
 	}
@@ -569,7 +570,7 @@ str;
 		$titlelen = empty($attr['titlelen'])? 0 : intval($attr['titlelen']);
 		$infolen = empty($attr['infolen'])? 0 : intval($attr['infolen']);		
 		$orderby = empty($attr['orderby'])? 'id DESC' : $attr['orderby'];
-		$limit = empty($attr['limit'])? '10' : $attr['limit'];
+		$limit = empty($attr['limit'])? '1' : $attr['limit'];
 		$pagesize = empty($attr['pagesize'])? '0' : $attr['pagesize'];
 		$keyword = empty($attr['keyword'])? '': trim($attr['keyword']);
 
@@ -648,7 +649,8 @@ str;
 	//Load('extend');//调用msubstr()
 
 	foreach(\$_list as \$autoindex => \$list):
-
+        \$list['month']=date('m',\$list['updatetime']);
+        \$list['day']=date('d',\$list['updatetime']);                
 	\$_jumpflag = (\$list['flag'] & B_JUMP) == B_JUMP? true : false;
 	\$list['url'] = get_content_url(\$list['id'], \$list['cid'], \$list['ename'], \$_jumpflag, \$list['jumpurl']);
 	if($titlelen) \$list['title'] = str2sub(\$list['title'], $titlelen, 0);	
