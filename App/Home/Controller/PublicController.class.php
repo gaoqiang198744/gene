@@ -79,9 +79,9 @@ class PublicController extends HomeCommonController {
 
 
 		//跳转
-		//$this->redirect(MODULE_NAME.'/Member/index');
+		$this->redirect(MODULE_NAME.'/Member/index');
 		//redirect(__MODULE__);
-		$this->success('登录成功', $furl , array('input'=>''));
+		//$this->success('登录成功', $furl , array('input'=>''));
 	}
 
 		//退出

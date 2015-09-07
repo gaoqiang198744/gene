@@ -4,8 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>{$title}-<yang:sitename /></title>
+<link href='http://fonts.useso.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'/>
+<link href="__PUBLIC__/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="__PUBLIC__/css/magnific-popup.css" rel="stylesheet" type="text/css"/>
+<link href="__PUBLIC__/css/edit.css" rel="stylesheet" type="text/css" media="all" />
 <script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js" ></script>
-<link href="__PUBLIC__/css/css.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 function changeVcode(obj){
 	$("#VCode").attr("src",'<yang:vcodeurl />'+ '#'+Math.random());
@@ -15,76 +18,44 @@ function changeVcode(obj){
 </head>
 
 <body>
-<!--top -->
-<div id="top">
-<include file="Public:header" />
+<include file="Public:header" />   
 
-<div class="warp1 mt">
-	<include file="Public:announce" />
-</div>
-<div class="clear"></div>
+<div class="login-area">
+  <div class="wrap">
+    <form method='post' id="form_do" name="form_do" action="{:U(MODULE_NAME. '/Public/register')}">
+      <h3 class="service-title tl-c">账户注册</h3>
+      <div class="input-container clearfix">
+        <span class="enter-intro">邮箱：</span>
+        <input type="text" class="textbox" name="email" />
+        <!--<p class="error-tip">！错误提示</p>-->
+      </div>
+      <!--<div class="input-container">
+        <span class="enter-intro">验证码：</span>
+        <input type="text" class="textbox" />
+        <a href="" class="btn default-btn code-btn">获取验证码</a>
+      </div>
+      <div class="input-container">
+        <span class="enter-intro">验证码：</span>
+        <input type="text" class="textbox" />
+        <a href="" class="btn default-btn code-btn disabled">稍后获取（60秒）</a>
+      </div>-->
+      <div class="input-container">
+        <span class="enter-intro">密码：</span>
+        <input type="password" class="textbox" name="password" />
+      </div>
+      <div class="input-container">
+        <span class="enter-intro">确认密码：</span>
+        <input type="password" class="textbox" name="rpassword"/>
+      </div>
+      <p class="regis-tip" style="margin-left:200px;">（对于您的个人信息我们将保密，请放心填写）</p>
+      <div class="input-container">
+        <span class="enter-intro">&nbsp;</span>
+        <input type="submit"  id="submit" class="btn" style="padding:10px 40px;" value="注册"/>
+      </div>
+    </form>
 
-</div>
-
-<div class="content">
-	<div class="warp1 mt">
-<div class="left f_l">
-	
-	
-	
-	
-	</div>
-<div class="right f_r">
-<h3 class="nybt"><span>会员注册</span></h3>
-<div class="form">
-		<form method='post' id="form_do" name="form_do" action="{:U(MODULE_NAME. '/Public/register')}">
-		<dl>
-			<dt>邮箱：</dt>
-			<dd>
-				<input type="text" name="email" class="inp_one" />
-			</dd>
-			<dd>推荐使用<a href="http://mail.qq.com" target="_blank" class="red">QQ</a>、<a href="http://mail.163.com" target="_blank" class="red">163</a>邮箱，登录时使用</dd>
-		</dl>
-		<dl>
-			<dt>昵称：</dt>
-			<dd>
-				<input type="text" name="nickname" class="inp_one" />
-			</dd>
-			<dd>任意网名，可以随意修改
-			</dd>
-		</dl>
-		<dl>
-			<dt> 密码：</dt>
-			<dd>
-				<input type="password" name="password" class="inp_one" value=""/>
-			</dd>
-		</dl>
-		<dl>
-			<dt> 确认密码：</dt>
-			<dd>
-				<input type="password" name="rpassword" class="inp_one" value=""/>
-			</dd>
-		</dl>
-
-		<if condition="C('CFG_VERIFY_REGISTER') eq 1">
-		<dl>
-			<dt>验证码</dt>
-			<dd>
-				<input type="text" name="vcode" class="inp_small" /><img src="<yang:vcodeurl />" id="VCode" onclick="javascript:changeVcode(this);" />
-			</dd>
-		</dl>
-		</if>
-		<div class="form_b">		
-			<input type="submit" class="btn_blue" id="submit" value="完成注册">
-		</div>
-	   </form>
-	</div>
-
-</div>
-<div class=" clear"></div>
-</div>
-</div>
-
+  </div>
+</div>  
 <include file="Public:footer" />
 
 </body>
