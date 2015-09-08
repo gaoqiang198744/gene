@@ -6,14 +6,22 @@ function setcity() {
 	var SelP=document.getElementsByName('province')[0];
     var SelC=document.getElementsByName('city')[0];
     var DefP=arguments[2];
-    var DefC=arguments[3];var provinceOptions = new Array("请选择省份",0,"北京",1,"上海",2,"天津",3,"重庆",4,"广东",5,"福建",6,"浙江",7,"江苏",8,"山东",9,"辽宁",10,"江西",11,"四川",12,"陕西",13,"湖北",14,"河南",15,"河北",16,"山西",17,"内蒙古",18,"吉林",19,"黑龙江",20,"安徽",21,"湖南",22,"广西",23,"海南",24,"云南",25,"贵州",26,"西藏",27,"甘肃",28,"宁夏区",29,"青海",30,"新疆",31,"香港",32,"澳门",33,"台湾",34,"海外",60 );
-    SelP.options.length = 0;     
+    var DefC=arguments[3];var provinceOptions = new Array("北京",1,"上海",2,"天津",3,"重庆",4,"广东",5,"福建",6,"浙江",7,"江苏",8,"山东",9,"辽宁",10,"江西",11,"四川",12,"陕西",13,"湖北",14,"河南",15,"河北",16,"山西",17,"内蒙古",18,"吉林",19,"黑龙江",20,"安徽",21,"湖南",22,"广西",23,"海南",24,"云南",25,"贵州",26,"西藏",27,"甘肃",28,"宁夏区",29,"青海",30,"新疆",31,"香港",32,"澳门",33,"台湾",34,"海外",60 );
+    var cityOptions = new Array("东城区",101,"西城区",102,"朝阳区",105,"海淀区",106,"丰台区",107,"石景山区",108,"门头沟区",109,"房山区",110,"通州区",111,"顺义区",112,"昌平区",113,"大兴区",114,"平谷区",115,"怀柔区",116,"密云县",117,"延庆县",118 );
+	SelP.options.length = 0;     
     for(var i = 0; i < provinceOptions.length/2; i++) {
         SelP.options[i]=new Option(provinceOptions[i*2],provinceOptions[i*2+1]);
         if(SelP.options[i].value==DefP) {
             SelP.selectedIndex = i;
         }
     }	
+	        for(var i = 0; i < cityOptions.length/2; i++) {
+            SelC.options[i]=new Option(cityOptions[i*2],cityOptions[i*2+1]);
+            if (SelC.options[i].value==DefC) {
+                SelC.selectedIndex = i;
+            }
+        }  
+	
     SelP.onchange = function(){
         switch (SelP.value) {case "1" :
 var cityOptions = new Array("东城区",101,"西城区",102,"朝阳区",105,"海淀区",106,"丰台区",107,"石景山区",108,"门头沟区",109,"房山区",110,"通州区",111,"顺义区",112,"昌平区",113,"大兴区",114,"平谷区",115,"怀柔区",116,"密云县",117,"延庆县",118 );
@@ -112,7 +120,7 @@ var cityOptions = new Array("乌鲁木齐",3101,"克拉玛依",3102,"石河子",
             var cityOptions = new Array("");
             break;
         }
-
+		
         SelC.options.length = 0;     
         for(var i = 0; i < cityOptions.length/2; i++) {
             SelC.options[i]=new Option(cityOptions[i*2],cityOptions[i*2+1]);
