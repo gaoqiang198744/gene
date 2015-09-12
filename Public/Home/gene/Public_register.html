@@ -14,6 +14,24 @@ function changeVcode(obj){
 	$("#VCode").attr("src",'<yang:vcodeurl />'+ '#'+Math.random());
 	return false;
 }
+$(function () {
+    $('#register_button').click(function(){
+    	$.post("{:U(MODULE_NAME. '/Public/register')}",{
+	  email:$('#email').val(),
+          password:$('#password').val(),
+          rpassword:$('#rpassword').val(), 
+	},function(d){
+		if(d.status == 1){
+                    //alert(d.url);
+                    location.href = d.url;
+		}else{
+                    $(".error-tip").hide();                  
+                    $("#"+d.input+"_info").html(d.info);
+                    $("#"+d.input+"_info").show();
+                }
+	},'json');
+    });    
+});
 </script>
 </head>
 
@@ -22,12 +40,12 @@ function changeVcode(obj){
 
 <div class="login-area">
   <div class="wrap">
-    <form method='post' id="form_do" name="form_do" action="{:U(MODULE_NAME. '/Public/register')}">
+    <form method='post' id="form_do" name="form_do" action="">
       <h3 class="service-title tl-c">账户注册</h3>
       <div class="input-container clearfix">
         <span class="enter-intro">邮箱：</span>
-        <input type="text" class="textbox" name="email" />
-        <!--<p class="error-tip">！错误提示</p>-->
+        <input type="text" class="textbox" name="email" id="email" />
+        <p class="error-tip" id="email_info" style="display: none">！错误提示</p>
       </div>
       <!--<div class="input-container">
         <span class="enter-intro">验证码：</span>
@@ -41,16 +59,17 @@ function changeVcode(obj){
       </div>-->
       <div class="input-container">
         <span class="enter-intro">密码：</span>
-        <input type="password" class="textbox" name="password" />
+        <input type="password" class="textbox" name="password" id="password"/>
       </div>
       <div class="input-container">
         <span class="enter-intro">确认密码：</span>
-        <input type="password" class="textbox" name="rpassword"/>
+        <input type="password" class="textbox" name="rpassword" id="rpassword"/>
+        <p class="error-tip" id="password_info" style="display: none">！错误提示</p>
       </div>
       <p class="regis-tip" style="margin-left:200px;">（对于您的个人信息我们将保密，请放心填写）</p>
       <div class="input-container">
         <span class="enter-intro">&nbsp;</span>
-        <input type="submit"  id="submit" class="btn" style="padding:10px 40px;" value="注册"/>
+        <input type="button"  id="register_button" class="btn" style="padding:10px 40px;" value="注册"/>
       </div>
     </form>
 

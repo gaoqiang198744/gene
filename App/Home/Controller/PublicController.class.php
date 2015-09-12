@@ -79,9 +79,9 @@ class PublicController extends HomeCommonController {
 
 
 		//跳转
-		$this->redirect(MODULE_NAME.'/Member/index');
+		//$this->redirect(MODULE_NAME.'/Member/index');
 		//redirect(__MODULE__);
-		//$this->success('登录成功', $furl , array('input'=>''));
+		$this->success('登录成功', $furl , array('input'=>''));
 	}
 
 		//退出
@@ -202,7 +202,12 @@ class PublicController extends HomeCommonController {
 
 		$db = M('member');
 		if (!$db->validate($validate)->create()) {
-			$this->error($db->getError());
+                    if(strpos($db->getError(),'箱')){
+                        $pos=array('input'=>'email');
+                    }else{
+                        $pos=array('input'=>'password'); 
+                    }
+			$this->error($db->getError(),'',$pos);
 		}
 		
 		if (strlen($password)<4 || strlen($password)>20) {
@@ -242,40 +247,6 @@ class PublicController extends HomeCommonController {
 
 		if($id = $db->add($data)) {
 			$msg = '注册会员成功<br/>'; 
-			$active['expire'] = strtotime("+2 day")  ;//二天后时间截,相当于time() + 2 * 24 * 60 * 60
-			$active['code'] = get_randomstr(11);
-			$active['userid'] = $id;
-			$active['id'] = M('active')->add($active);
-
-
-		    $url = rtrim(C('CFG_WEBURL'),'/'). "/index.php?m=". MODULE_NAME ."&c=Public&a=activate&va={$active['id']}&vc={$active['code']}";
-		    //$url = preg_replace("#http:\/\/#i", '', $url);
-		    //$url = 'http://'.preg_replace("#\/\/#i", '/', $url);
-		   
-		    $webname = C('CFG_WEBNAME');
-		    $weburl = C('CFG_WEBURL');
-		    $weburl2 = str_replace('http://www.', '', $weburl);
-		    $webqq = C('cfg_qq');
-		    $webmail = C('cfg_email');
-		   
-			$subject = "[{$webname}]请激活你的帐号，完成注册";
-			$message = <<<str
-<p>您于 {$regtime} 注册{$webname}帐号 <a href="mailto:{$email}">{$email}</a> ，点击以下链接，即可激活该帐号：</p>
-<p><a href="{$url}" target="_blank">{$url}</a></p>
-<p>(如果您无法点击此链接，请将它复制到浏览器地址栏后访问)</p>
-<p>为了保障您帐号的安全性，请在 48小时内完成激活，此链接将在您激活过一次后失效！</p>
-<p>此邮件由系统发送，请勿直接回复。</p>
-str;
-			if (C('CFG_MEMBER_VERIFYEMAIL')) {
-				if (send_mail($email, $subject , $message) == true) 
-				{
-					$msg .= '验证邮件已发送，请尽快查收邮件，激活该帐号';
-				} else {
-
-					$msg .= '验证邮件发送失败，请写管理员联系';
-				}
-			}
-			
 			$this->success($msg ,U(MODULE_NAME. '/Public/login'));
 		}else {
 			$this->error('注册失败');

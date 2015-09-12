@@ -14,6 +14,22 @@ function changeVcode(obj){
 	$("#VCode").attr("src",'<yang:vcodeurl />'+ '#'+Math.random());
 	return false;
 }
+$(function () {
+    $('#login_button').click(function(){
+    	$.post("{:U(MODULE_NAME. '/Public/login')}",{
+	  email:$('#email').val(),
+          password:$('#password').val(),        
+	},function(d){
+		if(d.status == 1){
+                    //alert(d.url);
+                    location.href = d.url;
+		}else{
+                    $("#info").html(d.info);
+                    $("#info").show();
+                }
+	},'json');
+    });    
+});
 </script>
 </head>
 
@@ -21,16 +37,16 @@ function changeVcode(obj){
     <include file="Public:header" />
 <div class="login-area">
   <div class="wrap">
-    <form method='post' id="form_do" name="form_do" action="{:U(MODULE_NAME. '/Public/login')}">
+    <form method='post' id="form_do" name="form_do" action="">
       <h3 class="service-title tl-c">登录</h3>
       <div class="input-container clearfix">
         <span class="enter-intro">邮箱：</span>
-       <input type="text" name="email"  class="textbox" />
-        <!--<p class="error-tip">！错误提示</p>-->
+       <input type="text" name="email"  class="textbox" id="email"  />
+        <p class="error-tip" id="info" style="display: none"></p>
       </div>
       <div class="input-container">
         <span class="enter-intro">密码：</span>
-        <input type="password" name="password"  class="textbox" value=""/>
+        <input type="password" name="password"  class="textbox" value="" id="password"/>
         <!--<a href="" class="forget-link">忘记密码？</a>-->
       </div>
     <if condition="C('CFG_VERIFY_LOGIN') eq 1">
@@ -44,7 +60,7 @@ function changeVcode(obj){
     </if>
       <div class="input-container">
         <span class="enter-intro">&nbsp;</span>
-        <input type="submit" class="btn" style="padding:10px 40px;" value="登录" id="submit" />
+        <input type="button" class="btn" style="padding:10px 40px;" value="登录" id="login_button" />
         <input type="hidden" name="furl" value="{$furl}"/>
       </div>
     </form>
