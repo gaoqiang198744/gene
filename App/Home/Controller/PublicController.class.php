@@ -105,8 +105,8 @@ class PublicController extends HomeCommonController {
 		del_cookie(array('name' => 'status'));
 
 
-		//$this->redirect(MODULE_NAME.'/Public/login');
-		$this->success('安全退出', $furl);
+		$this->redirect(MODULE_NAME.'/Public/login');
+		//$this->success('安全退出', $furl);
 	}
 
 

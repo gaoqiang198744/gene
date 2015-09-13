@@ -23,12 +23,13 @@ class ReviewController extends HomeCommonController{
 		$data['posttime'] =time();
 		$data['ip'] = get_client_ip();		
 		$data['agent'] = $_SERVER['HTTP_USER_AGENT'];
-
+                $data['username']  = I('username', '','htmlspecialchars,trim');
+                $data['email']  = I('email', '','htmlspecialchars,trim');
 		
-		$verify = I('vcode','','htmlspecialchars,trim');
-		if (C('cfg_verify_review') == 1 && !check_verify($verify)) {
-			$this->error('验证码不正确');
-		}
+//		$verify = I('vcode','','htmlspecialchars,trim');
+//		if (C('cfg_verify_review') == 1 && !check_verify($verify)) {
+//			$this->error('验证码不正确');
+//		}
 
 
 		$uid = get_cookie('uid');//不能用empty(get_cookie('uid')),empty不能用于函数返回值
@@ -42,12 +43,12 @@ class ReviewController extends HomeCommonController{
 				$data['username'] = preg_replace('/(\w+)\@(\w+)\.(\w+)/is',"$1@*.$3",get_cookie('email'));
 			}
 			*/
-			$data['username'] = get_cookie('nickname');
+			//$data['username'] = get_cookie('nickname');
 					
 		}else {
 			$data['userid'] = 0;			
-			$data['username'] = I('nickname', '游客');		
-			$data['email'] =I('email', '', 'htmlspecialchars,trim');
+			//$data['username'] = I('nickname', '游客');		
+			//$data['email'] =I('email', '', 'htmlspecialchars,trim');
 		}
 		if ($data['userid'] == 0 &&  !C('CFG_FEEDBACK_GUEST')) {//允许匿名评论
 			$this->error('请登录后评论');

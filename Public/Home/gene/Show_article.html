@@ -38,21 +38,12 @@
 						   		<h5 class="blog_title"><a href="{$content.url}">{$content.title}</a></h5>
 						   		<div class="links">
 									<h3 class="comments">By&nbsp;{$content.author}</h3>
-									<h3 class="comments"><a href="#">126评论</a></h3>
+									<h3 class="comments"><a href="#"><span class="review-count">0</span>评论</a></h3>
 									<h3 class="tags">Tags:{$content.keywords} </h3>
 
 									<div class="clear"> </div>
 								</div>
 								{$content.content}
-                               
-								
-								
-								
-								
-								
-								
-
-								
 								<div class="grid_2_page">
 									<ul>
 										<li class="preview"><a href="#"><span> </span></a></li>
@@ -70,106 +61,45 @@
                                                                      </yang:artlist>
 							          </ul>
 						        </div>
-						        <div class="comments">
-						        	<h4>3评论</h4>
-						        	<div class="c_grid">
-						        		<div class="person_1">
-						        			<a href="#"><span></span></a>
-						        		</div>
-						        		<div class="desc">
-						        			<div class="c_sub_grid">
-						        			<p><a href="#">周某某, 2013-03-12 </a></p>
-						        			<h6><a href="#">回复</a></h6>
-						        			<div class="clear"> </div>
-						        			</div>
-						        			<div class="para">
-						        				<p>果面覆有细密白色绒毛，果成熟后木质化不可食；种子球形，绿豆大小，外皮粗，被细毛。</p>
-						        			</div>
-						        		</div>
-						        		<div class="clear"> </div>
-						        	</div>
-
-						        	<div class="c_grid">
-						        		<div class="person_1">
-						        			<a href="#"><span></span></a>
-						        		</div>
-						        		<div class="desc">
-						        			<div class="c_sub_grid">
-						        			<p><a href="#">周某某, 2013-03-12 </a></p>
-						        			<h6><a href="#">回复</a></h6>
-						        			<div class="clear"> </div>
-						        			</div>
-						        			<div class="para">
-						        				<p>果面覆有细密白色绒毛，果成熟后木质化不可食；种子球形，绿豆大小，外皮粗，被细毛。</p>
-						        			</div>
-						        		</div>
-						        		<div class="clear"> </div>
-						        	</div>
-
-						        	<div class="c_grid">
-						        		<div class="person_1">
-						        			<a href="#"><span></span></a>
-						        		</div>
-						        		<div class="desc">
-						        			<div class="c_sub_grid">
-						        			<p><a href="#">周某某, 2013-03-12 </a></p>
-						        			<h6><a href="#">回复</a></h6>
-						        			<div class="clear"> </div>
-						        			</div>
-						        			<div class="para">
-						        				<p>果面覆有细密白色绒毛，果成熟后木质化不可食；种子球形，绿豆大小，外皮粗，被细毛。</p>
-						        			</div>
-						        		</div>
-						        		<div class="clear"> </div>
-						        	</div>
-
-						        	<div class="c_grid_1">
-						        		<div class="person_1 plus">
-						        			<a href="#"><span> </span></a>
-						        		</div>
-						        		<div class="desc">
-						        			<div class="c_sub_grid">
-						        			<p><a href="#">周某某, 2013-03-12 </a></p>
-						        			<h6><a href="#">回复</a></h6>
-						        			<div class="clear"> </div>
-						        			</div>
-						        			<div class="para">
-						        				<p>果面覆有细密白色绒毛，果成熟后木质化不可食；种子球形，绿豆大小，外皮粗，被细毛。</p>
-						        			</div>
-						        		</div>
-						        		<div class="clear"> </div>
-						        	</div>
-
+						        <div class="comments comment-box">
+						        	<h4><span class="review-count">0</span>评论</h4>
+                                                                        <div class="more-comment">
+                                                                            后面还有<span id="more_count"></span>条评论，<a href="javascript:get_review();">点击查看>></a>
+                                                                        </div>				  
 						        </div>
 
-						        <div class="comments-area">
+						        <div class="comments-area comment-item">
 				  		        <h4>留下你的足迹</h4>
-											<form>
+											<form action="{:U(MODULE_NAME.'/Review/add')}" method="post" class="" id="reviewForm"  autocomplete="off">
+                                                                                                    	<input type="hidden" name="post_id" value="{$content.id}"/>
+                                                                                                        <input type="hidden" name="model_id" value="{$cate.modelid}" />
+                                                                                                        <input type="hidden" name="title" value="{$content.title}"/>
+                                                                                                        <input type="hidden" name="review_id" value="0" />
 												<p>
-													<input type="text" value="昵称*" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = 'Name*';}">
+													<input type="text" name="username" value="昵称*" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = '昵称*';}" placeholder="昵称*" >
 												</p>
 												<p>
-													<input type="text"  value="邮箱*" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = 'Email *';}">
+													<input type="text" name="email" value="邮箱*" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = '邮箱*';}">
 												</p>
 												<div class="clear"> </div>
 												<div class="text_area">
-													<textarea onFocus="if(this.value == 'Message*') this.value='';" onBlur="if(this.value == '') this.value='Message*';">想说的话*</textarea>
+													<textarea name="content" onFocus="if(this.value == '想说的话*') this.value='';" onBlur="if(this.value == '') this.value='想说的话*';">想说的话*</textarea>
 												</div>
 												<div>
 													<div class="sky_form">
-														<label class="checkbox"><input type="checkbox" name="checkbox"><i>通过电子邮件通知我后续的评论</i></label>
+														<!--<label class="checkbox"><input type="checkbox" name="checkbox"><i>通过电子邮件通知我后续的评论</i></label>-->
 													</div>
-													<div class="button send_button">
+													<div class="button send_button comment-ft">
 													   	 <input type="submit" value="评论">
 													</div>
 												</div>
-
-											</form>
+											
 							  </div>
 					</div>
 					</div>
 					<div class="clear"> </div>
 				</div>
+                                </form>
 				<div class="rsidebar span_1_of_3">
 					<div class="search_box">
 						<form>
@@ -290,7 +220,15 @@
 	</script>
     </if>
     <!--comment end-->
-
+    <script type="text/javascript" src="__PUBLIC__/js/review.js"></script>
+    <script type="text/javascript" language="javascript"> 
+        var get_review_url = "{:U(MODULE_NAME.'/Review/getlist')}";
+        var post_review_url = "{:U(MODULE_NAME.'/Review/add')}";   
+		function changeVcode(obj){
+			$("#VCode").attr("src",'<yang:vcodeurl />'+ '#'+Math.random());
+			return false;
+		}
+	</script>
 
 
 

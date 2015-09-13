@@ -36,7 +36,7 @@ $(function(){
     var form = $('.comment-item:last');
     //插入回复表单
     $('.comment-box').delegate('.reply-btn','click',function(event){
-        var parent = $(this).closest('.comment-item');
+        var parent = $(this).closest('.comment-item');      
         //写入对应回复ID
         form.find(':hidden[name=review_id]').val($(this).attr('reply'));
         var textarea = parent.append(form).find('textarea');
@@ -58,7 +58,8 @@ $(function(){
     //点击评论框以外的地方，重置评论表单
     $(document).click(function(){
         if(form.find(':hidden[name=review_id]').val() != 0){
-            $('.more-comment').after($('.comment-box').find('form'));
+            //$('.more-comment').after($('.comment-box').find('form'));
+            $('.more-comment').after($('.comment-box').find('.comments-area'));
             form.find(':hidden[name=review_id]').val(0);
             form.find('textarea').text('');
         }
@@ -83,10 +84,10 @@ $(function(){
         var content = $("textarea[name='content']");
         
         if($.trim(content.val())==''){
-            comment_btn.find("span").remove().end().append("<span class='error'>内容不能为空</span>");
+            comment_btn.find("div").remove().end().append("<div class='error-tip'>内容不能为空</div>");
             return false;
         }else {
-            comment_btn.find("span").remove();
+            comment_btn.find("div").remove();
         }
         
         
@@ -94,38 +95,40 @@ $(function(){
         $.post(post_review_url,_postForm,function(data){
             if(data.status == 1) {
                 if (data.review_id == 0) {
-                    comment_btn.find("span").remove().end().append("<span>评论成功</span>");
-                    var html = '<div class="comment-item review_item_list">'+
-                                '<a class="avatar" user_id="'+data.user_id+'" href="#" target="_blank">'+
-                                '<img src="'+ data.avatar+'" />'+
-                                '</a> '+
-                                '<div class="comment-hd">'+                           
-                                '<a class="reply-btn" href="javascript:;" reply="'+ data.id +'">回复<i></i></a>'+
-                                '<span class="username">' + data.username + data.ico + '</span>' + 
-                                '<span class="commment-time">' + data.posttime + '</span>'+
+                    comment_btn.find("div").remove().end().append("<div>评论成功</div>");
+                    var html = '<div class="comment-item review_item_list c_grid">'+
+                                '<div class="person_1"><a class="avatar" user_id="'+data.user_id+'" href="#" target="_blank">'+
+                                //'<img src="'+ data.avatar+'" />'+
+                                '</a> </div>'+
+                                '<div class="desc comment-hd"><div class="c_sub_grid">'+                                                         
+                                '<p><a href="#"><span class="username">' + data.username + data.ico + ',</span>' + 
+                                '<span class="commment-time">' + data.posttime + '</span></a></p>'+
+                                '<h6><a class="reply-btn" href="javascript:;" reply="'+ data.id +'">回复<i></i></a></h6><div class="clear"> </div>'+
                                 '</div>'+
-                                '<div class="comment-bd" id="' + data.id + '">'+ content.val() + 
-                                '</div>'+
-                                '</div>';
-                    $('.comment-box h3').after(html);
+                                '<div class="comment-bd para" id="' + data.id + '"><p>'+ content.val() + 
+                                '</p></div>'+
+                                '</div><div class="clear"> </div></div>';
+                    $('.comment-box h4').after(html);
                     $('.review-count').text(parseInt($('.review-count').text())+1);
-                    $("html,body").animate({scrollTop: $(".comment-box h3").offset().top}, 500); 
+                    $("html,body").animate({scrollTop: $(".comment-box h4").offset().top}, 500); 
                 }else {
 
-                    var html = '<div class="comment-item reply-item" id="' + data.id + '">'+
-                                '<a class="avatar" user_id="'+data.user_id+'" href="#" target="_blank">'+
-                                '<img src="'+ data.avatar+'" />'+
-                                '</a>'+
-                                '<div class="comment-hd"><a class="reply-btn" href="javascript:;" reply="'+data.review_id+'">回复<i></i></a>'+
-                                '<span class="username">' + data.username + data.ico + '</span>' + 
-                                '<span class="commment-time">' + data.posttime + '</span>'+
+                    var html = '<div class="comment-item reply-item c_grid_1" id="' + data.id + '">'+
+                                '<div class="person_1 plus"><a class="avatar" user_id="'+data.user_id+'" href="#" target="_blank">'+
+                               // '<img src="'+ data.avatar+'" />'+
+                                '</a></div>'+
+                                '<div class="desc comment-hd"><div class="c_sub_grid">'+
+                                '<p><a href="#"><span class="username">' + data.username + data.ico + ',</span>' + 
+                                '<span class="commment-time">' + data.posttime + '</span></p></a>'+
+                                //'<a class="reply-btn" href="javascript:;" reply="'+data.review_id+'">回复<i></i></a></div>'+
+                                '<h6><a class="reply-btn" href="javascript:;" reply="'+ data.id +'">回复<i></i></a></h6><div class="clear"> </div>'+
                                 '</div>'+
-                                '<div class="comment-bd">'+
-                                '<div>' + data.content + '</div>'+
+                                '<div class="comment-bd para">'+
+                                '<p>' + data.content + '</p>'+
                                 '</div>'
-                                '</div>';
-                        //$('#' + data.review_id).after(html);
-                        $('#reviewForm').before(html);
+                                '</div><div class="clear"> </div></div>';
+                        $('#' + data.review_id).after(html);
+                        //$('#reviewForm').before(html);
                 }
                
                 /*
@@ -183,15 +186,15 @@ $(function(){
             function(data){
                 //是否登录做对应展示
                 if(data.user_id != 0){
-                    $('#my_avatar').attr('src', data.avatar);
+                    //$('#my_avatar').attr('src', data.avatar);
                     $('#reviewForm').show();
-                    $('.login-tip').hide();
+                    //$('.login-tip').hide();
                 }else{
-                    $('#my_avatar').attr('src', data.avatar);
+                    //$('#my_avatar').attr('src', data.avatar);
                     if (data.guest != 1) {
                         $('#reviewForm').hide();
                     }                   
-                    $('.login-tip').show();
+                    //$('.login-tip').show();
                     
                 }
                 
@@ -199,41 +202,61 @@ $(function(){
                 //$('#comment_count').text(data.count);
                 if(data.list && (typeof data.list == 'object')){
                     $.each(data.list, function(i, v){
-                        var html = '<div class="comment-item review_item_list">'+
-                            '<a class="avatar" user_id="'+v.user_id+'" href="#" target="_blank">'+
-                                '<img src="'+ v.avatar+'" />'+
-                            '</a> '+
-                            '<div class="comment-hd">'+                         
-                            '<a class="reply-btn" href="javascript:;" reply="'+v.id+'">回复<i></i></a>'+
-                            '<span class="username">' + v.username + v.ico + '</span>' + 
-                            '<span class="commment-time">' + v.posttime + '</span>'+
-                            '</div>'+
-                            '<div class="comment-bd" id="' + v.id + '">'+ v.content + 
-                            '</div>';
+                        var html = '<div class="comment-item review_item_list c_grid">'+
+                                '<div class="person_1"><a class="avatar" user_id="'+v.user_id+'" href="#" target="_blank">'+
+                                //'<img src="'+ v.avatar+'" />'+
+                                '</a> </div>'+
+                               '<div class="desc comment-hd"><div class="c_sub_grid">'+                                                         
+                                '<p><a href="#"><span class="username">' + v.username + v.ico + ',</span>' + 
+                                '<span class="commment-time">' + v.posttime + '</span></a></p>'+
+                                '<h6><a class="reply-btn" href="javascript:;" reply="'+ v.id +'">回复<i></i></a></h6><div class="clear"> </div>'+
+                                '</div>'+
+                                '<div class="comment-bd para" id="' + v.id + '"><p>'+ v.content + 
+                                '</p></div>'+
+                                '</div><div class="clear"> </div></div>';                                
+//                            '<div class="comment-hd">'+                         
+//                            '<a class="reply-btn" href="javascript:;" reply="'+v.id+'">回复<i></i></a>'+
+//                            '<span class="username">' + v.username + v.ico + '</span>' + 
+//                            '<span class="commment-time">' + v.posttime + '</span>'+
+//                            '</div>'+
+//                            '<div class="comment-bd" id="' + v.id + '">'+ v.content + 
+//                            '</div>';
 
                         //review start
                         if(v.child && (typeof v.child == 'object')){
 
                             $.each(v.child, function(i2, v2){
                                 
-                                html += '<div class="comment-item reply-item" id="' + v2.id + '">'+
-                                    '<a class="avatar" user_id="'+v2.user_id+'" href="#" target="_blank">'+
-                                        '<img src="'+ v2.avatar+'" />'+
-                                    '</a>'+
-                                    '<div class="comment-hd"><a class="reply-btn" href="javascript:;" reply="'+v2.review_id+'" at-user="true">回复<i></i></a>'+
-                                    '<span class="username">' + v2.username + v2.ico + '</span>' + 
-                                    '<span class="commment-time">' + v2.posttime + '</span>'+
-                                    '</div>'+
-                                    '<div class="comment-bd">'+
-                                    '<div>' + v2.content + '</div>'+
-                                    '</div>'+
-                                    '</div>';
+                                html += '<div class="comment-item reply-item c_grid_1" id="' + v2.id + '">'+
+                                '<div class="person_1 plus"><a class="avatar" user_id="'+v2.user_id+'" href="#" target="_blank">'+
+                                //'<img src="'+ v.avatar+'" />'+
+                                '</a> </div>'+
+                               '<div class="desc comment-hd"><div class="c_sub_grid">'+                                                         
+                                '<p><a href="#"><span class="username">' + v2.username + v2.ico + ',</span>' + 
+                                '<span class="commment-time">' + v2.posttime + '</span></a></p>'+
+                                '<h6><a class="reply-btn" href="javascript:;" reply="'+ v2.review_id +'" at-user="true">回复<i></i></a></h6><div class="clear"> </div>'+
+                                '</div>'+
+                                '<div class="comment-bd para" id="' + v2.id + '"><p>'+ v2.content + 
+                                '</p></div>'+
+                                '</div><div class="clear"> </div></div>'; 
+                                        
+//                                    '<a class="avatar" user_id="'+v2.user_id+'" href="#" target="_blank">'+
+//                                        '<img src="'+ v2.avatar+'" />'+
+//                                    '</a>'+
+//                                    '<div class="comment-hd"><a class="reply-btn" href="javascript:;" reply="'+v2.review_id+'" at-user="true">回复<i></i></a>'+
+//                                    '<span class="username">' + v2.username + v2.ico + '</span>' + 
+//                                    '<span class="commment-time">' + v2.posttime + '</span>'+
+//                                    '</div>'+
+//                                    '<div class="comment-bd">'+
+//                                    '<div>' + v2.content + '</div>'+
+//                                    '</div>'+
+//                                    '</div>';
                             });
                         }
 
                         
                         //review end
-                        html += '</div>';
+                        //html += '</div>';
                         $('.more-comment').before(html);
                     });
                     page = page+1;
