@@ -17,25 +17,30 @@ class MemberController extends HomeCommonController {
 		if (!$user) {
 			$this->error('请重新登录',U(MODULE_NAME.'/Public/login'));
 		}
-		$user['detail'] = M('memberdetail')->find($uid);
-		if (empty($user['detail'])) {
-			$user['detail'] = array(
-					'realname' => '还没设置',
-					'sex' => '保密',
-					'birthday' => '0000-00-00',
-					'animal' => '保密',
-					'star' => '保密',
-					'province' => '保密',
-					'area' => '保密',
-				);
-		}else {
-			$user['detail']['sex'] = $user['detail']['sex']? '女士' : '男士';
-			$user['detail']['animal'] = get_item_value('animal', $user['detail']['animal']);
-			$user['detail']['star'] = get_item_value('animal', $user['detail']['star']);
-		}
-		
-
-		$this->assign('user', $user);
+                $check_lang=array('预约中','采样中','检测中','报告中','完成');
+                $book_info=M('check')->where('member_id='.$uid)->select();
+                foreach($book_info as $k=>$v){
+                    $book_info[$k]['status_info']=$check_lang[$v['status']];
+                }
+//		$user['detail'] = M('memberdetail')->find($uid);
+//		if (empty($user['detail'])) {
+//			$user['detail'] = array(
+//					'realname' => '还没设置',
+//					'sex' => '保密',
+//					'birthday' => '0000-00-00',
+//					'animal' => '保密',
+//					'star' => '保密',
+//					'province' => '保密',
+//					'area' => '保密',
+//				);
+//		}else {
+//			$user['detail']['sex'] = $user['detail']['sex']? '女士' : '男士';
+//			$user['detail']['animal'] = get_item_value('animal', $user['detail']['animal']);
+//			$user['detail']['star'] = get_item_value('animal', $user['detail']['star']);
+//		}
+//		
+//
+		$this->assign('book_info', $book_info);
 		$this->assign('title', '会员中心');
 		$this->display();
 	}
@@ -197,13 +202,10 @@ class MemberController extends HomeCommonController {
                         $address = I('address', '');
                         $book_time = I('book_time', '');
 			if (empty($realname)) {
-				$this->error('请填写真实姓名！');
+				$this->error('请填写姓名！');
 			}
 			if (empty($telephone)) {
-				$this->error('请填写联系电话！');
-			}
-                        if (empty($province)) {
-				$this->error('请选择省/城市！');
+				$this->error('请填写手机！');
 			}
 			if (empty($address)) {
 				$this->error('请填写地址！');
@@ -219,11 +221,13 @@ class MemberController extends HomeCommonController {
                                 'city'		        => $city,
                                 'district'		=> $district,
                                 'address'		=> $address,
-                                'book_time'		=> $book_time,
+                                'book_time'		=> strtotime($book_time),
+                                'create_time'           =>  time(),
+                                'status'                => 0,
 				);
-                        print_r($data);exit;
+                        //print_r($data);exit;
 			if (false !== M('check')->add($data)) {
-				$this->success('预约成功', U(MODULE_NAME. '/Member/password'));
+				$this->success('预约成功');
 			}else {
 
 				$this->error('预约失败');

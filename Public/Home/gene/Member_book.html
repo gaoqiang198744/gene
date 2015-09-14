@@ -25,11 +25,11 @@
                   <h3 class="service-title tl-c">预约取样</h3>
                   <div class="input-container clearfix">
                     <span class="enter-intro">姓名：</span>
-                    <input type="text" class="textbox"  name="realname" id="realname" />
+                    <input type="text" class="textbox"  name="realname" id="realname" /><div class="error-tip" id="realname-tip"></div>
                   </div>
                   <div class="input-container clearfix">
                     <span class="enter-intro">手机：</span>
-                    <input type="text" class="textbox"  name="telephone" id="telephone" />
+                    <input type="text" class="textbox"  name="telephone" id="telephone" /><div class="error-tip" id="telephone-tip"></div>
                   </div>
                   <div class="input-container clearfix">
                     <span class="enter-intro">城市选择：</span>
@@ -41,7 +41,7 @@
                     <input type="text" class="textbox" name="address"  id="address" />
                     <div class="enter-tip">
                       <p>请留下您的详细联系地址，<br/>我们将上门取样。</p>
-                    </div>
+                    </div><div class="error-tip" id="address-tip"></div>
                   </div>
                   <div class="input-container clearfix">
                     <span class="enter-intro">取样时间：</span>
@@ -49,7 +49,7 @@
                     <div class="enter-tip">
                       <p>设定一个您方便的时间，我们将提前与您联系。</p>
                     </div>
-
+                    <div class="error-tip" id="booktime-tip"></div>
                   </div>
                   <div class="input-container">
                     <span class="enter-intro">&nbsp;</span>
@@ -86,38 +86,38 @@
                     </span>
                 </div>
                 <div class="input-container tl-c">
-                    <input type="button" class="btn default-btn" style="padding:10px 40px; margin-right:30px;" value="修改" />
-                    <input type="button" class="btn" style="padding:10px 40px;" value="确定" />
+                    <input type="button" class="btn default-btn" style="padding:10px 40px; margin-right:30px;" value="修改" id="edit_add" />
+                    <input type="button" class="btn" style="padding:10px 40px;" value="确定" id="post_add" />
                 </div>
 
               </div>
 
-              <div class="container"id="succes" style="display: none">
+              <div class="container" id="succes" style="display: none">
                 <h3 class="service-title tl-c">预约成功！</h3>
                 <p class="regis-tip tl-c" style="color:#ff4400;">我们的工作人员会在近期联系您，并上门取件，请保持电话畅通，感谢选择金堂科技健康检测服务。</p>
                 <div class="input-container">
                     <span class="enter-intro">姓名：</span>
-                    <span>
+                    <span id="sname">
                         周某某
                     </span>
                 </div>
                 <div class="input-container">
                     <span class="enter-intro">手机：</span>
-                    <span>
+                    <span id="stel">
                         187099435535
                     </span>
                 </div>
 
                 <div class="input-container">
                     <span class="enter-intro">详细地址：</span>
-                    <span>
+                    <span id="saddress">
                         北京市 朝阳区 大屯路 西奥中心 A座 702
                     </span>
                 </div>
 
                 <div class="input-container">
                     <span class="enter-intro">取样时间：</span>
-                    <span>
+                    <span id="stime">
                         2015年8月30日 16：00
                     </span>
                 </div>
@@ -127,10 +127,16 @@
             <script type="text/javascript" src="__PUBLIC__/js/bootstrap-datetimepicker.js"></script>
             <script type="text/javascript">
             $(function () {
+                var myDate = new Date();
+                //alert(myDate.toLocaleDateString());
+                var day=(parseInt(myDate.getDate())+1);
+                
                 $(".form_datetime").datetimepicker({
                   format: 'yyyy-mm-dd hh:ii',
                   language: 'cn',
                   autoclose: true,
+                  minuteStep:30,
+                  startDate:myDate.getFullYear()+'-'+myDate.getMonth()+1+'-'+day+' '+'00:00:00',
                 });
             });
             </script>
@@ -142,15 +148,68 @@
     $(function(){ 
         setcity();
 
-　　$("#yuyuebtn").click(function(){      
+　　$("#yuyuebtn").click(function(){
+      if($("#realname").val()==""){
+          $("#realname-tip").text("姓名不能为空");
+          return;
+      }
+      var re = /^1\d{10}$/ ;
+      if (re.test($("#telephone").val())){
+          
+      }else{
+          $("#telephone-tip").text("手机格式不正确");
+          return;
+      } 
+
+      if($("#address").val()==""){
+          $("#address-tip").text("地址不能为空");
+          return;
+      }
+      if($("#booktime").val()==""){
+          $("#booktime-tip").text("预约时间不能为空");
+          return;
+      }   
 　　　　$("#form_add").hide();
         $("#confirm").show();
         $("#cname").text($("#realname").val());
         $("#ctel").text($("#telephone").val());
         $("#caddress").text($("#p").find("option:selected").text()+$("#c").find("option:selected").text()+ $("#address").val());
         
-        $("#ctime").text($("#booktime").val());
+        $("#ctime").text($("#booktime").val()+":00");
 　　}); 
+  　$("#edit_add").click(function(){ 
+        $("#form_add").show();
+　　　　 $("#confirm").hide();
+        $(".error-tip").html("");  
+　　});
+    $("#post_add").click(function(){ 
+        //$("#form_add").show();
+　　　　 //$("#confirm").hide();
+        $.post("{:U(MODULE_NAME. '/Member/book')}",{
+	  realname :$('#realname').val(),
+          telephone:$('#telephone').val(),
+          province :$("#p").val(),
+          city     :$("#c").val(),
+          address  :$("#p").find("option:selected").text()+$("#c").find("option:selected").text()+ $("#address").val(),
+          book_time:$("#booktime").val()+":00",
+	},function(d){
+		if(d.status == 1){
+                    //alert(d.info);
+　　　　$("#confirm").hide();
+        $("#succes").show();
+        $("#sname").text($("#realname").val());
+        $("#stel").text($("#telephone").val());
+        $("#saddress").text($("#p").find("option:selected").text()+$("#c").find("option:selected").text()+ $("#address").val());
+        
+        $("#stime").text($("#booktime").val()+":00");
+		}else{
+                    alert(d.info);
+                    //$("#info").html(d.info);
+                    //$("#info").show();
+                }
+	},'json');
+        
+　　});
 }); 
 </script>   
     
