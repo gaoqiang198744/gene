@@ -100,65 +100,7 @@
 					<div class="clear"> </div>
 				</div>
                                 </form>
-				<div class="rsidebar span_1_of_3">
-					<div class="search_box">
-						<form>
-						   <input type="text" value="Search" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = 'Search';}"><input type="submit" value="">
-					    </form>
-				 	</div>
-        <div class="social_2">
-          <h4>Follow Us</h4>
-	        <ul>
-				    <li class="facebook"><a href="#"><span> </span></a></li>
-				    <li class="twitter"><a href="#"><span> </span></a></li>
-						<li class="google"><a href="#"><span> </span></a></li>
-			  	</ul>
-		 	  </div>
-
-			 	<div class="Categories">
-			 		<h4>分类</h4>
-				 	<ul class="sidebar">
-	           	                       <if condition="$flag_son">
-                                               <yang:catlist typeid='$cid' type='son' flag='1'>
-                                                 <div class="hover"><li><a href="{$catlist.url}">{$catlist.name}</a></li></div>
-                                                </yang:catlist>
-                                                <else/>                                          
-                                                    <if condition = "$cate['pid'] gt 0">
-                                                       <yang:catlist typeid="$cate['pid']" type='son' flag='1'>
-                                                       <div class="hover"><li><a href="{$catlist.url}">{$catlist.name}</a></li></div>
-                                                       </yang:catlist>
-                                                    </if>
-                                               </if> 
-	        </ul>
-		    </div>
-        <div class="popularpost">
-	      	<h4>最热的文章</h4>
-                        <yang:artlist limit='1' pagesize='0' titlelen='16'>
-	        	<div class="image">
-	        		<a href="{$artlist.url}"><img src="{$artlist.litpic}"/></a>
-	        	</div>
-	        	{$artlist.description}
-	        	<div class="link_1">
-	        		<p><a href="{$artlist.url}">{$artlist.month}月 {$artlist.day} </a></p>
-	        		<a href="{$artlist.url}" class="arrow_btn right">了解详情</a>
-	        		<div class="clear"> </div>
-	        	</div>
-                      </yang:artlist>
-	      </div>
-
-        <div class="tags">
-        	<h4>标签</h4>
-        	<ul>
-        		<li><a href="#">基因检测</a></li>
-        		<li><a href="#">疾病</a></li>
-        		<li><a href="#">运动</a></li>
-        		<li><a href="#">营养</a></li>
-        		<li><a href="#">减肥</a></li>
-        		<li><a href="#">健康</a></li>
-        		<li><a href="#">美容</a></li>
-        		<div class="clear"> </div>
-        	</ul>
-        </div>
+<include file="Article:right" />
 
 		  </div>
 			<div class="clear"> </div>
@@ -167,59 +109,6 @@
 </div>
 
 <!-- //end-blog_inner -->
-
-    
-    
-    
-
-    <!--comment 
-    <if condition='$commentflag eq 1'>
-     <div class="comment-box">
-        <h3>评论(<span class="review-count">0</span>)</h3>
-		
-        <div class="more-comment">
-            后面还有<span id="more_count"></span>条评论，<a href="javascript:get_review();">点击查看>></a>
-        </div>
-        <form action="{:U(MODULE_NAME.'/Review/add')}" method="post" class="comment-item" id="reviewForm"  autocomplete="off">
-		<a name="reply_" id="reply_"></a>
-        	<input type="hidden" name="post_id" value="{$content.id}"/>
-        	<input type="hidden" name="model_id" value="{$cate.modelid}" />
-        	<input type="hidden" name="title" value="{$content.title}"/>
-        	<input type="hidden" name="review_id" value="0" />
-        	<span class="avatar"><img src="{:get_avatar(get_cookie('face'),30)}" alt="" id="my_avatar"></span>
-        	<div class="comment-bd" id="review">
-        		<div class="comment-textarea">
-					<textarea name="content" placeholder="我也来说两句..."></textarea>
-				</div>
-
-				<if condition="C('cfg_verify_review') eq 1">
-				<div class="comment-vcode">
-					
-					<input type="text" name="vcode" class="inp_small" />
-					<img src="<yang:vcodeurl />" id="VCode" onclick="javascript:changeVcode(this);" />
-				</div>
-				</if>
-			</div>
-            <div class="comment-ft">
-				<input type="submit" class="btn_blue" value="评论&nbsp;[&nbsp;Ctrl+Enter&nbsp;]">
-			</div>
-        </form>
-        
-        <div class="login-tip" style="display:none;">
-            您可以选择 <a href="{:U(MODULE_NAME. '/Public/login')}">登录</a> | <a href="{:U(MODULE_NAME. '/Public/register')}">立即注册</a>
-        </div>
-    </div>
-    <script type="text/javascript" src="__PUBLIC__/js/review.js"></script>
-    <script type="text/javascript" language="javascript"> 
-        var get_review_url = "{:U(MODULE_NAME.'/Review/getlist')}";
-        var post_review_url = "{:U(MODULE_NAME.'/Review/add')}";   
-		function changeVcode(obj){
-			$("#VCode").attr("src",'<yang:vcodeurl />'+ '#'+Math.random());
-			return false;
-		}
-	</script>
-    </if>
-    <!--comment end-->
     <script type="text/javascript" src="__PUBLIC__/js/review.js"></script>
     <script type="text/javascript" language="javascript"> 
         var get_review_url = "{:U(MODULE_NAME.'/Review/getlist')}";

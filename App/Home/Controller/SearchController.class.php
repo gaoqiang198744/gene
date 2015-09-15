@@ -7,18 +7,7 @@ class SearchController extends HomeCommonController{
 
 		$modelid = I('modelid', 0,'intval');		
 		$keyword = I('keyword', '', 'htmlspecialchars,trim');//关键字
-		if (!empty($modelid)) {
-			$tablename = M('model')->where(array('id' => $modelid))->getField('tablename');
-		}
-		
-		if (empty($tablename)) {
-			$model = M('model')->order('id')->find();
-			if ($model) {
-				$modelid = $model['id'];
-				$tablename = $model['tablename'];
-			}
-		}
-
+                $tablename="article";
 		if($keyword == '请输入关键词') $keyword = '';
 		if (!empty($keyword) && !empty($tablename)) {
 
@@ -48,14 +37,14 @@ class SearchController extends HomeCommonController{
 			}else {
 				$_jumpflag = false;
 				$_jumpurl = '';
-			}			
+			}                        
 			$vlist[$k]['url'] = get_content_url($v['id'], $v['cid'], $v['ename'], $_jumpflag, $_jumpurl);
 		}
 
 		if (empty($keyword)) {
-			$title = '搜索中心';	
+			$title = '搜索';	
 		}else {			
-			$title = $keyword.'_搜索中心';	
+			$title = $keyword.'_搜索';	
 		}
 
 

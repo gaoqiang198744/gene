@@ -1,0 +1,59 @@
+				<div class="rsidebar span_1_of_3">
+					<div class="search_box">
+                                            <form method="post" action="{:U('Search/index')}">
+						   <input type="text" name="keyword" value="{$keyword}" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = 'Search';}"><input type="submit" value="">
+					    </form>
+				 	</div>
+        <div class="social_2">
+          <h4>Follow Us</h4>
+	        <ul>
+				    <li class="facebook"><a href="#"><span> </span></a></li>
+				    <li class="twitter"><a href="#"><span> </span></a></li>
+						<li class="google"><a href="#"><span> </span></a></li>
+			  	</ul>
+		 	  </div>
+
+			 	<div class="Categories">
+			 		<h4>分类</h4>
+				 	<ul class="sidebar">
+	           	                       <if condition="$flag_son">
+                                               <yang:catlist typeid='$cid' type='son' flag='1'>
+                                                 <div class="hover"><li><a href="{$catlist.url}">{$catlist.name}</a></li></div>
+                                                </yang:catlist>
+                                                <else/>                                          
+                                                    <if condition = "$cate['pid'] gt 0">
+                                                       <yang:catlist typeid="$cate['pid']" type='son' flag='1'>
+                                                       <div class="hover"><li><a href="{$catlist.url}">{$catlist.name}</a></li></div>
+                                                       </yang:catlist>
+                                                    </if>
+                                               </if> 
+	        </ul>
+		    </div>
+        <div class="popularpost">
+	      	<h4>最热的文章</h4>
+                        <yang:artlist limit='1' pagesize='0' titlelen='16'>
+	        	<div class="image">
+	        		<a href="{$artlist.url}"><img src="{$artlist.litpic}"/></a>
+	        	</div>
+	        	{$artlist.description}
+	        	<div class="link_1">
+	        		<p><a href="{$artlist.url}">{$artlist.month}月 {$artlist.day} </a></p>
+	        		<a href="{$artlist.url}" class="arrow_btn right">了解详情</a>
+	        		<div class="clear"> </div>
+	        	</div>
+                      </yang:artlist>
+	      </div>
+
+        <div class="tags">
+        	<h4>标签</h4>
+        	<ul>
+        		<li><a href="#">基因检测</a></li>
+        		<li><a href="#">疾病</a></li>
+        		<li><a href="#">运动</a></li>
+        		<li><a href="#">营养</a></li>
+        		<li><a href="#">减肥</a></li>
+        		<li><a href="#">健康</a></li>
+        		<li><a href="#">美容</a></li>
+        		<div class="clear"> </div>
+        	</ul>
+        </div>
