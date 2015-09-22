@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ajaxfileupload.js"></script>
+<link rel='stylesheet' type="text/css" href="__PUBLIC__/css/style.css" />
+    <script>
+       $(function () {
+            $(":button").click(function () {
+                if ($("#excelData").val().length > 0) {
+                    ajaxFileUpload();
+                }
+                else {
+                    alert("请选择文件");
+                }
+            })
+        })
+         function ajaxFileUpload(){
+                  $.ajaxFileUpload
+                     (
+                       {
+                            url:"{:U(MODULE_NAME. '/Sn/upload2')}", //你处理上传文件的服务端
+                            secureuri:false,
+                            fileElementId:'excelData',
+                            dataType: 'json',
+                            success: function (d)
+                                  {
+                                    $("#itip").html(d.info);  
+                                    html="<tr><th>序列号</th><th>密码</th></th>"; $("#sndata").html(html);
+                                    $.each(d.data,function(i,n){
+			var tTr="<tr><td>"+n.A +"</td><td>"+n.B+"</td></tr>";
+  	   					$("#sndata").append(tTr);
+  	   				
+                                    })                               
+                                   $("#excelData").val(''); 
+                                  }
+                               }
+                         )
+                 
+                       return false;
+        } 
+  　
+    </script>
+</head>
+<body>
+
+ <div class="main">
+  <div class="operate">
+  <form id="addform">
+    
+          <label>Excel表格：</label>
+                <input type="file" name="excelData" id="excelData" value=""  />
+                     
+          <input type="button" class="btn_blue" id="import" value="导入" /><span id="itip"></span>    
+       
+       </form>
+  </div>    
+      <div class="list">    
+          <table id="sndata" width="100%">
+              
+          </table>
+      </div>
+ </div>
+  </body>
+</html>
