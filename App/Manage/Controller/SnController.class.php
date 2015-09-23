@@ -14,7 +14,7 @@ class SnController extends CommonController {
         $upload->savePath  =      '/'; // 设置附件上传目录
         // 上传文件
         $info   =   $upload->uploadOne($_FILES['excelData']);
-        $filename = './Uploads'.$info['savepath'].$info['savename'];
+        $filename = './uploads'.$info['savepath'].$info['savename'];
         $exts = $info['ext'];
         //print_r($info);exit;
         if(!$info) {// 上传错误提示错误信息
