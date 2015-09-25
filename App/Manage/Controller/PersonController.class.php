@@ -1,11 +1,12 @@
 <?php
 namespace Manage\Controller;
-class SnController extends CommonController {
+class PersonController extends CommonController {
     public function index() {
         $this->display();
     }
+
     	//上传方法
-     function upload2()
+     public function upload2()
     {
         header("Content-Type:text/html;charset=utf-8");
         $upload = new \Think\Upload();// 实例化上传类
@@ -20,12 +21,14 @@ class SnController extends CommonController {
         if(!$info) {// 上传错误提示错误信息
               $this->error($upload->getError());
           }else{// 上传成功
+            
                   $this->goods_import($filename, $exts);
         }
     }
     //导入数据方法
     function goods_import($filename, $exts='xls')
     {
+       
         //导入PHPExcel类库，因为PHPExcel没有用命名空间，只能inport导入
         import("Org.Util.PHPExcel");
         //创建PHPExcel对象，注意，不能少了\
@@ -58,22 +61,48 @@ class SnController extends CommonController {
                 $data[$currentRow][$currentColumn]=$currentSheet->getCell($address)->getValue();
             }
 
-        }
+        } 
         $this->save_import($data);
     }
 
     //保存导入数据
     function save_import($data)
     {
+
         //print_r($data);exit;
         foreach ($data as $k=>$v){
-			$date['sn'] = $v['A'];
-			$date['password'] = $v['B'];
+			//通过检测编码，取出sid
+                        $where="sn="."'".$v['A']."'";
+                        $sn = M('sn')->where($where)->find();
+                        if($sn){
+                             if($sn['member_id']==0){
+                                $data1['status'] = 0;                              
+                                $data1['info']='检测编号为'.$v['A'].'未绑定，导入失败';
+                                echo json_encode($data1);exit; 
+                             }
+                        }else{
+                                $data1['status'] = 0;                              
+                                $data1['info']='检测编号为'.$v['A'].'不存在，导入失败';
+                                echo json_encode($data1);exit; 
+                        }
+                        
+                        $date['sid'] = $sn['id'];
+			$date['member_name'] = $v['B'];                       
+                        $date['sex'] = $v['C'];
+                        $date['birthday'] = $v['D'];
+                        $date['age'] = $v['E'];
+                        $date['height'] = $v['F'];
+                        $date['weight'] = $v['G'];
+                        $date['waistline'] = $v['H'];
+                        $date['hip'] = $v['I'];
+                        $date['heart'] = $v['J'];
+                        $date['job'] = $v['K'];
+                        $date['sport'] = $v['L'];                      
                         $date['add_time'] = time();
-			$result = M('sn')->add($date);
+			$result = M('person')->add($date);
+                        $date['sn'] = $v['A'];
         }
-        if($result){
-            
+        if($result){           
             $data1['status'] =   1;
             $data1['url']    = '';
             $data1['info']='导入成功';
@@ -85,90 +114,5 @@ class SnController extends CommonController {
         }
         //print_r($info);
 
-    }
-
-    //导出数据方法
-    function goods_export()
-    {
-		$goods_list = M('user')->select();
-        //print_r($goods_list);exit;
-        $data = array();
-        foreach ($goods_list as $k=>$goods_info){
-			$data[$k][id] = $goods_info['id'];
-            $data[$k][name] = $goods_info['name'];
-            $data[$k][sex] = $goods_info['sex'];
-        }
-        //print_r($goods_list);
-        //print_r($data);exit;
-
-        foreach ($data as $field=>$v){
-            if($field == 'id'){
-                $headArr[]='序号';
-            }
-
-            if($field == 'name'){
-                $headArr[]='姓名';
-            }
-			
-			if($field == 'sex'){
-                $headArr[]='年龄';
-            }
-        }
-
-        $filename="goods_list";
-
-        $this->getExcel($filename,$headArr,$data);
-    }
-
-
-    function getExcel($fileName,$headArr,$data){
-        //导入PHPExcel类库，因为PHPExcel没有用命名空间，只能inport导入
-        import("Org.Util.PHPExcel");
-        import("Org.Util.PHPExcel.Writer.Excel5");
-        import("Org.Util.PHPExcel.IOFactory.php");
-
-        $date = date("Y_m_d",time());
-        $fileName .= "_{$date}.xls";
-
-        //创建PHPExcel对象，注意，不能少了\
-        $objPHPExcel = new \PHPExcel();
-        $objProps = $objPHPExcel->getProperties();
-
-        //设置表头
-        $key = ord("A");
-        //print_r($headArr);exit;
-        foreach($headArr as $v){
-            $colum = chr($key);
-            $objPHPExcel->setActiveSheetIndex(0) ->setCellValue($colum.'1', $v);
-            $objPHPExcel->setActiveSheetIndex(0) ->setCellValue($colum.'1', $v);
-            $key += 1;
-        }
-
-        $column = 2;
-        $objActSheet = $objPHPExcel->getActiveSheet();
-
-        //print_r($data);exit;
-        foreach($data as $key => $rows){ //行写入
-            $span = ord("A");
-            foreach($rows as $keyName=>$value){// 列写入
-                $j = chr($span);
-                $objActSheet->setCellValue($j.$column, $value);
-                $span++;
-            }
-            $column++;
-        }
-
-        $fileName = iconv("utf-8", "gb2312", $fileName);
-        //重命名表
-        //$objPHPExcel->getActiveSheet()->setTitle('test');
-        //设置活动单指数到第一个表,所以Excel打开这是第一个表
-        $objPHPExcel->setActiveSheetIndex(0);
-        header('Content-Type: application/vnd.ms-excel');
-        header("Content-Disposition: attachment;filename=\"$fileName\"");
-        header('Cache-Control: max-age=0');
-
-        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save('php://output'); //文件通过浏览器下载
-        exit;
     }
 }
