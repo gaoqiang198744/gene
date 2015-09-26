@@ -7,7 +7,7 @@
 <link rel='stylesheet' type="text/css" href="__PUBLIC__/css/style.css" />
     <script>
        $(function () {
-            $("#import").click(function () {
+            $(":button").click(function () {
                 if ($("#excelData").val().length > 0) {
                     ajaxFileUpload();
                 }
@@ -15,34 +15,25 @@
                     alert("请选择文件");
                 }
             })
-            $("#search").click(function () {
-                if ($("#excelData").val().length > 0) {
-                    
-                }
-                else {
-                    alert("请输入检测序号");
-                }
-            })
         })
          function ajaxFileUpload(){
                   $.ajaxFileUpload
                      (
                        {
-                            url:"{:U(MODULE_NAME. '/Person/upload2')}", //你处理上传文件的服务端
+                            url:"{:U(MODULE_NAME. '/Food/upload2')}", //你处理上传文件的服务端
                             secureuri:false,
                             fileElementId:'excelData',
                             dataType: 'json',
                             success: function (d)
                                   {
                                     $("#itip").html(d.info); 
-     
                                     if(d.status==1){
-                                        html="<tr><th>检测编码</th><th>客户姓名</th><th>性别</th><th>出生日期</th><th>年龄</th><th>身高</th><th>体重</th><th>腰围</th><th>臀围</th><th>安静心率</th><th>职业</th><th>运动方式</th></tr>"; $("#sndata").html(html);
+                                        html="<tr><th>食物分类</th><th>食物名称</th><th>食物别称</th></tr>"; $("#sndata").html(html);
                                         $.each(d.data,function(i,n){
-                                        var tTr="<tr><td>"+n.A +"</td><td>"+n.B+"</td><td>"+n.C+"</td><td>"+n.D+"</td><td>"+n.E+"</td><td>"+n.F+"</td><td>"+n.G+"</td><td>"+n.H+"</td><td>"+n.I+"</td><td>"+n.J+"</td><td>"+n.K+"</td><td>"+n.L+"</td></tr>";
+                                        var tTr="<tr><td>"+n.A +"</td><td>"+n.B+"</td><td>"+n.C +"</td></tr>";
                                                                 $("#sndata").append(tTr);
-                                         })  
-                                    }                       
+                                        }) 
+                                    }                              
                                    $("#excelData").val(''); 
                                   }
                                }
@@ -59,9 +50,7 @@
   <div class="operate">
   <form id="addform">
     
-          <h2>个人信息导入</h2>
-          检测序列号:<input name="sn" id="sn"><input type="button" class="btn_blue" id="search" value="查询" />
-          <hr>
+          <h2>食物营养库</h2>
                 <input type="file" name="excelData" id="excelData" value=""  />
                      
           <input type="button" class="btn_blue" id="import" value="导入" /><span id="itip"></span>    

@@ -1,6 +1,6 @@
 <?php
 namespace Manage\Controller;
-class SnController extends CommonController {
+class DiseaseController extends CommonController {
     public function index() {
         $this->display();
     }
@@ -69,10 +69,11 @@ class SnController extends CommonController {
     {
         //print_r($data);exit;
         foreach ($data as $k=>$v){
-			$date['sn'] = $v['A'];
-			$date['password'] = $v['B'];
-                        $date['add_time'] = time();
-			$result = M('sn')->add($date);
+			$date['disease_cat']  = $v['A'];
+			$date['disease_name'] = $v['B'];
+                        $date['disease_des']  = $v['C'];
+                        $date['add_time']     = time();
+			$result = M('disease')->add($date);
         }
         if($result){
             

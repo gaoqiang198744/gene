@@ -1,6 +1,6 @@
 <?php
 namespace Manage\Controller;
-class SnController extends CommonController {
+class FoodController extends CommonController {
     public function index() {
         $this->display();
     }
@@ -69,16 +69,51 @@ class SnController extends CommonController {
     {
         //print_r($data);exit;
         foreach ($data as $k=>$v){
-			$date['sn'] = $v['A'];
-			$date['password'] = $v['B'];
-                        $date['add_time'] = time();
-			$result = M('sn')->add($date);
+			$date['food_type']  = $v['A'];
+			$date['food_name'] = $v['B'];
+                        if(!$v['B']){
+                            echo json_encode(array("info"=>'第二列数据为空'));
+                            exit;
+                        }
+                        $date['food_another']  = $v['C'];
+                        $date['weight']  = $v['D'];
+                        $date['eat_part']  = $v['E'];
+                        $date['heat']  = $v['F'];
+                        $date['portein']  = $v['G'];
+                        $date['fat']  = $v['H'];
+                        $date['ash']  = $v['I'];
+                        $date['carbohydrate']  = $v['J'];
+                        $date['renieratene']  = $v['K'];
+                        $date['niacin']  = $v['L'];
+                        $date['fibre']  = $v['M'];
+                        $date['cholestenone']  = $v['N'];
+                        $date['va']  = $v['O'];
+                        $date['vc']  = $v['P'];
+                        $date['vd']  = $v['Q'];
+                        $date['ve']  = $v['R'];
+                        $date['oryzanin']  = $v['S'];
+                        $date['actochrome']  = $v['T'];
+                        $date['acid']  = $v['U'];
+                        $date['ca']  = $v['V'];
+                        $date['p']  = $v['W'];
+                        $date['k']  = $v['X'];
+                        $date['na']  = $v['Y'];
+                        $date['mg']  = $v['Z'];
+                        $date['fe']  = $v['AA'];
+                        $date['zn']  = $v['AB'];
+                        $date['se']  = $v['AC'];
+                        $date['cu']  = $v['AD'];
+                        $date['mn']  = $v['AE'];                       
+                        $date['add_time']     = time();
+			$result = M('food')->add($date);
+                        
         }
         if($result){
             
             $data1['status'] =   1;
             $data1['url']    = '';
             $data1['info']='导入成功';
+            $data1['sql']=M('food')->getlastsql();
             $data1['data']=$data;
            echo json_encode($data1);
  //           $this->success('产品导入成功', '',$date);
