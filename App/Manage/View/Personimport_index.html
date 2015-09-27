@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ajaxfileupload.js"></script>
+<link rel='stylesheet' type="text/css" href="__PUBLIC__/css/style.css" />
+    <script>
+       $(function () {
+            $("#search").click(function () {
+                if ($("#sn").val().length > 0) {
+                      $.post("{:U(MODULE_NAME. '/Personimport/checksn')}",{sn:$('#sn').val()},
+                        function(data){
+                          $('#msg').html(data.info);
+                          if(data.status==1){
+                              //$('#sid').val(sn.id);
+                              $('#file1').show();
+                              
+                          }
+                          
+                          
+                        },
+                        "json");
+                }
+                else {
+                    alert("请输入检测序号");
+                }
+            })
+            $(".import").click(function () {
+                
+                var id=this.id.charAt(this.id.length - 1);
+                
+                if ($("#excelData"+id).val().length > 0) {
+                    ajaxFileUpload(id);
+                }
+                else {
+                    alert("请选择文件");
+                }
+            })
+        })
+         function ajaxFileUpload(id){
+             alert(id);
+             var excel='excelData'+id;
+             var url="{:U(MODULE_NAME. '/Personimport/upload2')}/fn/"+id;
+                  $.ajaxFileUpload
+                     (
+                       {
+                            url:url, //你处理上传文件的服务端
+                            secureuri:false,
+                            fileElementId:excel,
+                            dataType: 'json',
+                            success: function (d)
+                                  {
+                                    $("#itip").html(d.info); 
+     
+//                                    if(d.status==1){
+//                                        html="<tr><th>疾病分类</th><th>疾病名称</th><th>疾病风险</th></tr>"; $("#sndata").html(html);
+//                                        $.each(d.data,function(i,n){
+//                                        var tTr="<tr><td>"+n.A +"</td><td>"+n.B+"</td><td>"+n.C+"</td></tr>";
+//                                                                $("#sndata").append(tTr);
+//                                         })  
+//                                    }                       
+                                   $("#excelData1").val(''); 
+                                  }
+                               }
+                         )
+                 
+                       return false;
+        } 
+
+  　
+    </script>
+</head>
+<body>
+
+ <div class="main">
+  <div class="operate">
+  <form id="addform">
+    
+          <h2>个人检测结果及运动导入</h2>
+          检测序列号:<input name="sn" id="sn"><input type="button" class="btn_blue" id="search" value="查询" />
+          <br><div id="msg"><input type="hidden" name="sid"/></div>
+          <hr>
+          
+          <div id="file1" ><!-- style="display: none"-->
+           检测结果:<input type="file" name="excelData1"  id="excelData1" value="" />
+           <input type="button" class="import  btn_blue" id="import1" value="导入" /><span id="itip1"></span><hr>
+           营养信息:<input type="file" name="excelData2"  id="excelData2" value="" />
+           <input type="button" class="import  btn_blue" id="import2" value="导入" /><span id="itip2"></span><hr>
+           运动信息:<input type="file" name="excelData3"  id="excelData3" value="" />
+           <input type="button" class="import  btn_blue" id="import3" value="导入" /><span id="itip3"></span>           
+          </div>
+          
+       </form>
+  </div>    
+      <div class="list">    
+          <table id="sndata" width="100%">
+              
+          </table>
+      </div>
+ </div>
+  </body>
+</html>
