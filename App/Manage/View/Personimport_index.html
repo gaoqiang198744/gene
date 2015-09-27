@@ -38,8 +38,7 @@
                 }
             })
         })
-         function ajaxFileUpload(id){
-             alert(id);
+         function ajaxFileUpload(id){           
              var excel='excelData'+id;
              var url="{:U(MODULE_NAME. '/Personimport/upload2')}/fn/"+id;
                   $.ajaxFileUpload
@@ -51,7 +50,7 @@
                             dataType: 'json',
                             success: function (d)
                                   {
-                                    $("#itip").html(d.info); 
+                                    $("#itip"+id).html(d.info); 
      
 //                                    if(d.status==1){
 //                                        html="<tr><th>疾病分类</th><th>疾病名称</th><th>疾病风险</th></tr>"; $("#sndata").html(html);
@@ -74,10 +73,10 @@
 <body>
 
  <div class="main">
+     <div class="pos">{$type}</div>
   <div class="operate">
-  <form id="addform">
-    
-          <h2>个人检测结果及运动导入</h2>
+  <form id="addform">  
+        
           检测序列号:<input name="sn" id="sn"><input type="button" class="btn_blue" id="search" value="查询" />
           <br><div id="msg"><input type="hidden" name="sid"/></div>
           <hr>

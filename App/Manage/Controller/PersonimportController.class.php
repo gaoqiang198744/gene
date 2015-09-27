@@ -2,6 +2,7 @@
 namespace Manage\Controller;
 class PersonimportController extends CommonController {
     public function index() {
+        $this->assign('type', '个人检测结果及营养运动');
         $this->display();
     }
     public function checksn() {
@@ -47,7 +48,9 @@ class PersonimportController extends CommonController {
           }else{// 上传成功
             
               $data=$this->goods_import($filename, $exts);
-              print_r($data);exit;
+              //print_r($data);exit;
+              $this->save_import($data,I('get.fn'));
+              
         }
     }
     //导入数据方法
@@ -97,36 +100,67 @@ class PersonimportController extends CommonController {
 
         //print_r($data);exit;
         foreach ($data as $k=>$v){			
-			//通过检测编码，取出sid
-                        $where="sn="."'".$v['A']."'";
-                        $sn = M('sn')->where($where)->find();
-                        if($sn){
-                             if($sn['member_id']==0){
-                                $data1['status'] = 0;                              
-                                $data1['info']='检测编号为'.$v['A'].'未绑定，导入失败';
-                                echo json_encode($data1);exit; 
-                             }
-                        }else{
+            //通过检测编码，取出sid
+            $where="sn="."'".$v['A']."'";
+            $sn = M('sn')->where($where)->find();
+            if($sn){
+                if($sn['member_id']==0){
+                    $data1['status'] = 0;                              
+                    $data1['info']='检测编号为'.$v['A'].'未绑定，导入失败';
+                    echo json_encode($data1);exit; 
+                }
+            }else{
                                 $data1['status'] = 0;                              
                                 $data1['info']='检测编号为'.$v['A'].'不存在，导入失败';
                                 echo json_encode($data1);exit; 
-                        }
-
-                        
-                        $date['sid'] = $sn['id'];
-			$date['member_name'] = $v['B'];                       
-                        $date['sex'] = $v['C'];
-                        $date['birthday'] = $v['D'];
-                        $date['age'] = $v['E'];
-                        $date['height'] = $v['F'];
-                        $date['weight'] = $v['G'];
-                        $date['waistline'] = $v['H'];
-                        $date['hip'] = $v['I'];
-                        $date['heart'] = $v['J'];
-                        $date['job'] = $v['K'];
-                        $date['sport'] = $v['L'];                      
-                        $date['add_time'] = time();
-			$result = M('person')->add($date);
+            }
+            $date['sid'] = $sn['id'];
+            $date['add_time'] = time();
+            if($type==1){
+                $date['disease_cat']   =$v['B'];
+                $date['disease_name']  =$v['C'];
+                $date['disease_level'] =$v['D'];
+		$result = M('result')->add($date);
+                $time['check_time']=time();
+                $time['status']     =1;
+                $where="sid="."'".$sn['id']."'";
+                M('check')->where($where)->save($time);
+            }elseif ($type==2) {               
+                $date['daye']       = $v['B'];
+                $date['gs']         = $v['C'];
+                $date['gs_example'] = $v['D'];
+                $date['vegetables'] = $v['E'];
+                $date['mem']        = $v['F'];
+                $date['oil']        = $v['G'];
+                $date['breakfast']  = $v['H'];
+                $date['breakfaste'] = $v['I'];              
+                $date['lunch']      = $v['J'];               
+                $date['lunche']     = $v['K'];
+                $date['dinner']     = $v['L'];
+                $date['dinnere']    = $v['M'];               
+		$result = M('nutrition')->add($date);
+            }else{
+                $date['aerobic']         = $v['B'];
+                $date['power_frequency'] = $v['C'];
+                $date['week1']           = $v['D'];
+                $date['week2']           = $v['E'];
+                $date['week3']           = $v['F'];
+                $date['week4']           = $v['G'];
+                $date['week5']           = $v['H'];
+                $date['week6']           = $v['I'];              
+                $date['week7']           = $v['J'];               
+                $date['max_heat']        = $v['K'];
+                $date['reserve_heat']    = $v['L'];
+                $date['fast_lower']      = 70+$v['L']*0.4;
+                $date['fast_upper']      = 70+$v['L']*0.7;
+                $date['slow_lower']      = 70+$v['L']*0.6;
+                $date['slow_upper']      = 70+$v['L']*0.85;            
+		$result = M('sport')->add($date);
+                $rtime['report_time']=time();
+                $rtime['status']     =3;
+                $where="sid="."'".$sn['id']."'";
+                M('check')->where($where)->save($rtime);
+            }           
                         
         }
         if($result){           
