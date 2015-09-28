@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="__PUBLIC__/js/ajaxfileupload.js"></script>
-<link rel='stylesheet' type="text/css" href="__PUBLIC__/css/style.css" />
+    <script type="text/javascript" src="__PUBLIC__/js/ajaxfileupload.js"></script>
+    <link rel='stylesheet' type="text/css" href="__PUBLIC__/css/style.css" />
     <script>
        $(function () {
             $("#import").click(function () {
@@ -16,10 +16,20 @@
                 }
             })
             $("#search").click(function () {
-                if ($("#excelData").val().length > 0) {
-                    
-                }
-                else {
+                $('#msg').html('');
+                $('#pdata').html('');
+                if ($("#sn").val().length > 0) {
+                    $.post("{:U(MODULE_NAME. '/Person/index')}",{sn:$('#sn').val()},
+                    function(d){
+                      if(d.status==0){
+                        $('#msg').html(d.info);
+                      }else{
+                        $('#pdata').html(d.data);
+                      } 
+                    },
+                    "json");   
+                     
+                }else {
                     alert("请输入检测序号");
                 }
             })
@@ -34,15 +44,7 @@
                             dataType: 'json',
                             success: function (d)
                                   {
-                                    $("#itip").html(d.info); 
-     
-                                    if(d.status==1){
-                                        html="<tr><th>检测编码</th><th>客户姓名</th><th>性别</th><th>出生日期</th><th>年龄</th><th>身高</th><th>体重</th><th>腰围</th><th>臀围</th><th>安静心率</th><th>职业</th><th>运动方式</th></tr>"; $("#sndata").html(html);
-                                        $.each(d.data,function(i,n){
-                                        var tTr="<tr><td>"+n.A +"</td><td>"+n.B+"</td><td>"+n.C+"</td><td>"+n.D+"</td><td>"+n.E+"</td><td>"+n.F+"</td><td>"+n.G+"</td><td>"+n.H+"</td><td>"+n.I+"</td><td>"+n.J+"</td><td>"+n.K+"</td><td>"+n.L+"</td></tr>";
-                                                                $("#sndata").append(tTr);
-                                         })  
-                                    }                       
+                                   $("#itip").html(d.info);                        
                                    $("#excelData").val(''); 
                                   }
                                }
@@ -50,7 +52,7 @@
                  
                        return false;
         } 
-  　
+        
     </script>
 </head>
 <body>
@@ -59,20 +61,23 @@
   <div class="operate">
   <form id="addform">
     
-          <h2>个人信息导入</h2>
-          检测序列号:<input name="sn" id="sn"><input type="button" class="btn_blue" id="search" value="查询" />
-          <hr>
-                <input type="file" name="excelData" id="excelData" value=""  />
+          <div class="pos">个人信息查询和导入</div>
+          导入个人信息：<input type="file" name="excelData" id="excelData" value=""  />
                      
-          <input type="button" class="btn_blue" id="import" value="导入" /><span id="itip"></span>    
+          <input type="button" class="btn_blue" id="import" value="导入" /><span id="itip"></span>  
+          
+           <hr>
+          检测序列号:<input name="sn" id="sn"><input type="button" class="btn_blue" id="search" value="查询" />
+          <br />
+          <div id="msg"></div>
+          <hr>
+              
        
        </form>
-  </div>    
-      <div class="list">    
-          <table id="sndata" width="100%">
-              
-          </table>
+      <div id="pdata">
+      <include file="Person:data" />
       </div>
+  </div>
  </div>
   </body>
 </html>

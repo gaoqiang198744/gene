@@ -97,8 +97,9 @@ class PersonimportController extends CommonController {
     //保存导入数据
     function save_import($data,$type=1)
     {
-
+        $data1['info']="";
         //print_r($data);exit;
+        $i=0;$e=0;
         foreach ($data as $k=>$v){			
             //通过检测编码，取出sid
             $where="sn="."'".$v['A']."'";
@@ -106,13 +107,17 @@ class PersonimportController extends CommonController {
             if($sn){
                 if($sn['member_id']==0){
                     $data1['status'] = 0;                              
-                    $data1['info']='检测编号为'.$v['A'].'未绑定，导入失败';
-                    echo json_encode($data1);exit; 
+                    $data1['info'].='检测编号为'.$v['A'].'未绑定;';
+                    $e++;
+                    continue;
+                    //echo json_encode($data1);exit; 
                 }
             }else{
-                                $data1['status'] = 0;                              
-                                $data1['info']='检测编号为'.$v['A'].'不存在，导入失败';
-                                echo json_encode($data1);exit; 
+                    $data1['status'] = 0;                              
+                    $data1['info'].='检测编号为'.$v['A'].'不存在;';
+                    $e++;
+                    continue;
+                    //echo json_encode($data1);exit; 
             }
             $date['sid'] = $sn['id'];
             $date['add_time'] = time();
@@ -161,14 +166,19 @@ class PersonimportController extends CommonController {
                 $where="sid="."'".$sn['id']."'";
                 M('check')->where($where)->save($rtime);
             }           
-                        
+            if($result){
+                $i++;
+            }else{
+                $e++;
+            }          
         }
-        if($result){           
+        if($i>0){           
             $data1['status'] =   1;          
-            $data1['info']='导入成功';
-        }else{
+            $data1['info'].='成功导入'.$i.'条;';
+        }
+        if($e>0){
             $data1['status'] =   0;
-            $data1['info']='导入失败';   
+            $data1['info'].='导入失败'.$e.'条;';   
         }
         echo json_encode($data1);
         //print_r($info);

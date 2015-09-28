@@ -2,7 +2,32 @@
 namespace Manage\Controller;
 class PersonController extends CommonController {
     public function index() {
-        $this->display();
+        if(IS_POST){
+          $sn=I('post.sn',0,'intval');
+          if($sn>0){
+            $where="sn="."'".$sn."'";
+            $sndata = M('sn')->where($where)->find();          
+            if($sndata){
+                $data1['status'] = 1;
+                $where="sid="."'".$sndata['id']."'";
+                $healthdata = M('person')->where($where)->find();
+                if($healthdata){
+                    $this->assign('pdata',$healthdata);
+                    $data1['data']=$this->fetch('Person:data'); 
+                }else{
+                    $data1['status'] = 0;                        
+                    $data1['info']='无个人健康信息'; 
+                }
+            }else{
+                $data1['status'] = 0;                        
+                $data1['info']='检测编号为'.$sn.'不存在'; 
+            }
+            echo json_encode($data1);
+          }
+        }else{
+          $this->display();
+        }
+        
     }
 
     	//上传方法
@@ -70,6 +95,7 @@ class PersonController extends CommonController {
     {
 
         //print_r($data);exit;
+        $i=0;$e=0;
         foreach ($data as $k=>$v){
 			//通过检测编码，取出sid
                         $where="sn="."'".$v['A']."'";
@@ -77,13 +103,13 @@ class PersonController extends CommonController {
                         if($sn){
                              if($sn['member_id']==0){
                                 $data1['status'] = 0;                              
-                                $data1['info']='检测编号为'.$v['A'].'未绑定，导入失败';
-                                echo json_encode($data1);exit; 
+                                $data1['info']+='检测编号为'.$v['A'].'未绑定';
+                                $e++;continue;
                              }
                         }else{
                                 $data1['status'] = 0;                              
-                                $data1['info']='检测编号为'.$v['A'].'不存在，导入失败';
-                                echo json_encode($data1);exit; 
+                                $data1['info']+='检测编号为'.$v['A'].'不存在';
+                                $e++;continue;
                         }
                         
                         $date['sid'] = $sn['id'];
@@ -101,17 +127,21 @@ class PersonController extends CommonController {
                         $date['add_time'] = time();
 			$result = M('person')->add($date);
                         $date['sn'] = $v['A'];
+            if($result){
+                $i++;
+            }else{
+                $e++;
+            } 
         }
-        if($result){           
-            $data1['status'] =   1;
-            $data1['url']    = '';
-            $data1['info']='导入成功';
-            $data1['data']=$data;
-           echo json_encode($data1);
- //           $this->success('产品导入成功', '',$date);
-        }else{
-            $this->error('产品导入失败');
+        if($i>0){           
+            $data1['status'] =   1;            
+            $data1['info'].='成功导入'.$i.'条;';
         }
+        if($e>0){
+            $data1['status'] =   0;
+            $data1['info'].='导入失败'.$e.'条;';   
+        }
+        echo json_encode($data1);
         //print_r($info);
 
     }
