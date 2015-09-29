@@ -14,10 +14,18 @@ class PersonimportController extends CommonController {
                 $data1['status'] =  0;
                 $data1['info']='用户未绑定';
            }else{
-                $data1['status'] =   1;
+                $data1['status'] =1;
                 $data1['data']=$sndata;
                 $user_name=M('person')->where("sid="."'".$sndata['id']."'")->getField("member_name");
                 $data1['info']='用户姓名:'.$user_name;
+                $where="sid="."'".$sndata['id']."'";
+                $pdata1 = M('result')->where($where)->select();
+                $this->assign('pdata1',$pdata1);
+                $pdata2 = M('nutrition')->where($where)->select();
+                $this->assign('pdata2',$pdata2);
+                $pdata3 = M('sport')->where($where)->select();
+                $this->assign('pdata3',$pdata3);                
+                $data1['data']=$this->fetch('Personimport:data');
            }
            
         }else{

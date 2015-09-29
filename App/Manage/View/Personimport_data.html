@@ -1,0 +1,34 @@
+      <div class="list">
+          <if condition="$pdata1">
+            <h2>  检测结果:</h2>
+          <table id="data1" width="100%">
+              <tr><th>疾病分类</th><th>疾病名称</th><th>疾病风险</th><th>添加时间</th></tr>
+                <foreach name="pdata1" item="p">
+                  <tr><td>{$p.disease_cat}</td><td>{$p.disease_name}</td><td>{$p.disease_level}</td><td>{$p.add_time|date='Y-m-d',###}</td></tr>
+                </foreach>
+          </table>
+             <div style="margin-top: 50px"></div>
+           </if>
+          
+          <if condition="$pdata2">
+              <h2> 食品营养信息：</h2>
+          <table id="data2" width="100%">
+              <tr><th>每日能量</th><th>谷薯</th><th>谷薯举例</th><th>蔬果</th><th>肉蛋奶</th><th>油脂</th><th>早餐</th><th>早餐能量</th><th>午餐</th><th>午餐能量</th><th>晚餐</th><th>晚餐能量</th><th>添加时间</th></tr>
+              <foreach name="pdata2" item="p">
+                  <tr><td>{$p.daye}</td><td>{$p.gs}</td><td>{$p.gs_example}</td><td>{$p.vegetables}</td><td>{$p.mem}</td><td>{$p.oil}</td><td>{$p.breakfast}</td><td>{$p.breakfaste}</td><td>{$p.lunch}</td><td>{$p.lunche}</td><td>{$p.dinner}</td><td>{$p.dinnere}</td><td>{$p.add_time|date='Y-m-d',###}</td></tr>
+              </foreach>
+          </table> 
+           <div style="margin-top: 50px"></div>
+           </if>
+        
+          <if condition="$pdata3">
+              <h2>运动信息：</h2>
+          <table id="data3" width="100%">
+              <tr><th>有氧运动</th><th>力量次数</th><th>周1</th><th>周2</th><th>周3</th><th>周4</th><th>周5</th><th>周6</th><th>周7</th><th>最大心率</th><th>储备心率</th><th>快走下限40%HRR</th><th>快走上限70%HRR</th><th>慢跑下限60%HRR</th><th>慢跑上限85%HRR</th><th>添加时间</th></tr>
+              <foreach name="pdata3" item="p">
+                  <tr><td>{$p.aerobic}</td><td>{$p.power_frequency}</td><td>{$p.week1}</td><td>{$p.week2}</td><td>{$p.week3}</td><td>{$p.week4}</td><td>{$p.week5}</td><td>{$p.week6}</td><td>{$p.week7}</td><td>{$p.max_heat}</td><td>{$p.reserve_heat}</td><td>{$p.fast_lower}</td><td>{$p.fast_upper}</td><td>{$p.slow_lower}</td><td>{$p.slow_upper}</td><td>{$p.add_time|date='Y-m-d',###}</td></tr>
+              </foreach>
+          </table>                
+           </if>         
+      </div>
+

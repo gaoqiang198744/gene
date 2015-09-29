@@ -15,10 +15,8 @@
                           if(data.status==1){
                               //$('#sid').val(sn.id);
                               $('#file1').show();
-                              
+                              $('#pdata').html(data.data);
                           }
-                          
-                          
                         },
                         "json");
                 }
@@ -50,15 +48,7 @@
                             dataType: 'json',
                             success: function (d)
                                   {
-                                    $("#itip"+id).html(d.info); 
-     
-//                                    if(d.status==1){
-//                                        html="<tr><th>疾病分类</th><th>疾病名称</th><th>疾病风险</th></tr>"; $("#sndata").html(html);
-//                                        $.each(d.data,function(i,n){
-//                                        var tTr="<tr><td>"+n.A +"</td><td>"+n.B+"</td><td>"+n.C+"</td></tr>";
-//                                                                $("#sndata").append(tTr);
-//                                         })  
-//                                    }                       
+                                   $("#itip"+id).html(d.info);                              
                                    $("#excelData1").val(''); 
                                   }
                                }
@@ -92,10 +82,8 @@
           
        </form>
   </div>    
-      <div class="list">    
-          <table id="sndata" width="100%">
-              
-          </table>
+      <div id="pdata">
+      <include file="Personimport:data" />
       </div>
  </div>
   </body>

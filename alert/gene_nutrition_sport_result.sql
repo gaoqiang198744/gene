@@ -66,6 +66,7 @@ CREATE TABLE `gene_result` (
 DROP TABLE IF EXISTS `gene_sport`;
 CREATE TABLE `gene_sport` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `sid` mediumint(10) DEFAULT NULL,
   `aerobic` varchar(20) DEFAULT NULL,
   `power_frequency` varchar(20) DEFAULT NULL,
   `week1` varchar(500) DEFAULT NULL,
