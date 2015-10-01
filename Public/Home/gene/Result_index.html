@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<title>{$title}-<yang:sitename /></title>
+<link href="__PUBLIC__/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="__PUBLIC__/css/edit.css" rel="stylesheet" type="text/css" media="all" />
+ <link href="__PUBLIC__/css/center.css" rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js" ></script>
+
+
+</head>
+
+<body>
+<include file="Public:header" />
+<div class="acc-center acc-center-new">
+    <div class="wrap">
+        <div class="cookie-area">
+            <a href="index.php">首页</a> &gt;
+            <a href="{:U(MODULE_NAME.'/Member/index')}">用户中心</a> &gt;
+            <span>基因检测</span>
+        </div>
+
+        <div class="acc-center-container">
+            <div class="simple-intro">
+                <p>
+                    为您检测近年来亚洲人容易罹患的89种常见疾病项，如肿瘤类、妇科、骨科、呼吸、免疫等系列疾病，透过检测，您将更了解身体的情况，作出更有效的健康风险管理。
+                </p>
+
+            </div>
+
+            <div id="wrapper_tab" class="tab1">
+              
+
+              <div class="tab1 tab_body">
+                <div class="inner">
+                    <table>
+                        <tr>
+                            <th class="bg">项目种类</th>
+                            <th class="bg">风险等级</th>
+                            
+                        </tr>
+                        <foreach name='result' item='r'>
+                        <tr>
+                            <td><a href="{:U('Result/detail/dname/'.$r[disease_name])}">{$r.disease_name}</a></td>
+                            <td>{$r.disease_level}</td>                          
+                        </tr> 
+                        </foreach>                       
+                    </table>
+                </div>
+              </div>
+
+              
+              
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#wrapper_tab .tab_link').click(function() {
+            if ($(this).attr('class') != $('#wrapper_tab').attr('class') ) {
+                $('#wrapper_tab').attr('class',$(this).attr('class'));
+            }
+            return false;
+        });
+    });
+</script>
+<include file="Public:footer" />
+
+</body>
+</html>

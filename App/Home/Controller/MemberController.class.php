@@ -17,30 +17,18 @@ class MemberController extends HomeCommonController {
 		if (!$user) {
 			$this->error('请重新登录',U(MODULE_NAME.'/Public/login'));
 		}
-                $check_lang=array('预约中','采样中','检测中','报告中','完成');
+                $check_lang=array('序列码已绑定','接收到样本','完成检测','完成分析','完成报告');
                 $book_info=M('check')->where('member_id='.$uid)->select();
+                //echo M('check')->getlastsql();
                 foreach($book_info as $k=>$v){
                     $book_info[$k]['status_info']=$check_lang[$v['status']];
+                    $sn=M('sn')->where('id='.$v['sid'])->find();
+                    $book_info[$k]['sn']=$sn['sn'];
+                    $book_info[$k]['product']=$sn['product'];   
                 }
-//		$user['detail'] = M('memberdetail')->find($uid);
-//		if (empty($user['detail'])) {
-//			$user['detail'] = array(
-//					'realname' => '还没设置',
-//					'sex' => '保密',
-//					'birthday' => '0000-00-00',
-//					'animal' => '保密',
-//					'star' => '保密',
-//					'province' => '保密',
-//					'area' => '保密',
-//				);
-//		}else {
-//			$user['detail']['sex'] = $user['detail']['sex']? '女士' : '男士';
-//			$user['detail']['animal'] = get_item_value('animal', $user['detail']['animal']);
-//			$user['detail']['star'] = get_item_value('animal', $user['detail']['star']);
-//		}
-//		
-//
 		$this->assign('book_info', $book_info);
+                $this->assign('user', $user);
+                $this->assign('mid', 3);
 		$this->assign('title', '会员中心');
 		$this->display();
 	}
@@ -80,6 +68,7 @@ class MemberController extends HomeCommonController {
 
 
 	public function password() {
+                $this->assign('mid', 3);
 		$uid = get_cookie('uid');
 		if (IS_POST) {
 			$oldpassword = I('oldpassword', '');
@@ -238,7 +227,43 @@ class MemberController extends HomeCommonController {
 		$this->assign('title', '预约取样');
 		$this->display();
 	}
-
+        public function bind(){
+            if(IS_POST){
+                $uid = get_cookie('uid');
+                $sn=I('post.sn','');
+                $password=I('post.password','');
+                $sndata=M('sn')->where("sn='".$sn."'")->find();
+                if($sndata){
+                    if($sndata['password']==$password){
+                        if($sndata['member_id']==0){
+                            $add=array('member_id'=>$uid,'create_time'=>time(),'sid'=>$sndata['id'],'status'=>0);
+                            $check=M('check')->add($add);
+                            $save=array('use_time'=>time(),'member_id'=>$uid);
+                            $sn_save=M('sn')->where("id='".$sndata['id']."'")->save($save);
+                            if($check && $sn_save){
+                                $data['status']=1;
+                                $data['info']='绑定成功';
+                            }else{
+                                $data['status']=0;
+                                $data['info']='绑定失败';                                
+                            }
+                        }else{
+                            $data['status']=0;
+                            $data['info']='序列码已使用'; 
+                        }
+                    }else{
+                        $data['status']=0;
+                        $data['info']='序列号和密码错误';
+                    }
+                    
+                }else{
+                    $data['status']=0;
+                    $data['info']='序列号和密码错误';
+                    
+                }
+                echo json_encode($data);
+            }
+        }
 
 
 }

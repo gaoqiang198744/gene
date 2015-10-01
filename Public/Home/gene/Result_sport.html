@@ -1,0 +1,575 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<title>{$title}-<yang:sitename /></title>
+<link href="__PUBLIC__/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="__PUBLIC__/css/edit.css" rel="stylesheet" type="text/css" media="all" />
+ <link href="__PUBLIC__/css/center.css" rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js" ></script>
+
+
+</head>
+
+<body>
+<include file="Public:header" />
+<div class="acc-center acc-center-new">
+    <div class="wrap">
+        <div class="cookie-area">
+            <a href="index.html">首页</a> &gt;
+            <a href="{:U(MODULE_NAME.'/Member/index')}">用户中心</a> &gt;
+            <span>运动方案</span>
+        </div>
+
+        <div class="acc-center-container">
+            <div id="wrapper_tab" class="tab3" style="margin-top:0;">
+              <a href="#" class="tab1 tab_link">运动益处</a>
+              <a href="#" class="tab2 tab_link">运动计划</a>
+              <a href="#" class="tab3 tab_link">开始运动</a>
+              <a href="#" class="tab4 tab_link">注意事项</a>
+              <a href="#" class="tab5 tab_link">运动损伤应对措施</a>
+
+              <div class="clear"></div>
+
+              <div class="tab1 tab_body">
+                <div class="inner">
+                    <div class="yundong-good-area">
+                        <h4 class="yundong-title">运动带来的<b>益处</b></h4>
+                        <div class="said-area">
+                            <p class="tl-c">苏格拉底说：“身体的健康因静止不动而破坏，因运动练习而长期保持。”</p>
+                        </div>
+                        <div class="yg-good-item">
+                            <p>而现代科学已经证明，规律运动能给我们带来以下益处</p>
+                            <img src="__PUBLIC__/images/yundong-yichu.png" style="margin:20px 0;" />
+                            <!-- <div class="tl-c">
+                                <span>让人感觉更年轻</span>
+                                <span>保持健康的体型和体重</span>
+                                <span>增强肌肉力量和身体耐力</span>
+                                <span>有助于改善睡眠</span>
+                                <span>有助于协调性生活</span>
+                                <span>获得身心两方面的享受</span>
+                            </div> -->
+
+                        </div>
+                        <div class="yg-good-intro clearfix">
+                            <span class="fl-l">相反</span>
+                            <p>久坐少动，缺乏规律运动则会出现机体功能降低，从而增加肥胖，心脑血管疾病、骨质疏松、糖尿病、结肠癌等疾病的患病风险，对于女性还会增加乳腺癌的风险；此外，缺乏运动也会提升患焦虑和抑郁等精神疾病的概率。
+                            </p>
+                        </div>
+                        <div class="tl-c" style="padding-top:60px;">
+                            <a href="javascript:void(0);" class="btn default-btn" id="begin_yundong">开始运动</a>
+                        </div>
+
+                    </div>
+
+                </div>
+              </div>
+
+              <div class="tab2 tab_body">
+                <div class="inner">
+                    <div class="yundong-jihua">
+                        <h4 class="yundong-title">个人每周<b>运动计划</b></h4>
+                        <p class="result-intro">总体体质评估：健康</p>
+                        <ul class="result-ul">
+                            <li class="clearfix">
+                                <em class="ico fl-l">
+                                    体重
+                                </em>
+                                <div class="pop-tip fl-l clearfix">
+                                    <p><b>{$person.weight}KG</b></p>
+                                </div>
+                            </li>
+
+                            <li class="clearfix">
+                                <em class="ico bmi fl-l">
+                                    BMI
+                                </em>
+                                <div class="pop-tip fl-l clearfix">
+                                    <p><b>{$person.bmi}</b></p>
+                                </div>
+                            </li>
+
+                            <li class="clearfix">
+                                <em class="ico yao fl-l">
+                                    腰臀比
+                                </em>
+                                <div class="pop-tip fl-l clearfix">
+                                    <p><b>{$person.whr}</b></p>
+                                </div>                               
+                            </li>
+
+                            <li class="clearfix">
+                                <em class="ico style fl-l">
+                                    生活方式
+                                </em>
+                                <div class="pop-tip fl-l clearfix">
+                                    <p style="padding-top:10px;">职业/生活方式：<span style="color:#ff4400;">{$person.job}</span></p>
+                                </div>
+                                
+                            </li>
+                        </ul>
+
+                        <p class="tl-c result-intro" style="margin:40px 0 20px;">我们根据上述数据，结合您目前的运动情况，编制以下一周运动计划</p>
+                        <div class="tl-c">
+                            <img src="__PUBLIC__/images/yundongjihua-biao.png" id="yundong_jihua_title"/>
+                            有氧次数{$sport.aerobic} 力量次数{$sport.power_frequency}
+                        </div>
+<style type="text/css">
+.date-jihua-container{padding-top: 40px;}
+.date-jihua{margin-bottom: 10px;}
+.left{float: left; width: 15%; text-align: center; color: #fff; background: #4fbdbf; height: 50px; line-height: 50px;border-radius: 6px;}
+.right{float: right; width: 84%; color: #555;  background: #edf8f8; text-align: center; border-radius: 6px; height: 40px; padding-top: 10px; line-height: 1.2;}
+</style>
+                        <div class="date-jihua-container">
+                            <div class="date-jihua clearfix">
+                                <span class="left">星期一</span>
+                                <span class="right">{$sport.week1}
+
+                                </span>
+                            </div>
+                            <div class="date-jihua clearfix">
+                                <span class="left">星期二</span>
+                                <span class="right">{$sport.week2}
+                                </span>
+                            </div>
+                            <div class="date-jihua clearfix">
+                                <span class="left">星期三</span>
+                                <span class="right">{$sport.week3}
+                                </span>
+                            </div>
+                            <div class="date-jihua clearfix">
+                                <span class="left">星期四</span>
+                                <span class="right">{$sport.week4}
+                                </span>
+                            </div>
+                            <div class="date-jihua clearfix">
+                                <span class="left">星期五</span>
+                                <span class="right">{$sport.week5}
+                                </span>
+                            </div>
+                            <div class="date-jihua clearfix">
+                                <span class="left">星期六</span>
+                                <span class="right">{$sport.week6}
+                                </span>
+                            </div>
+                            <div class="date-jihua clearfix">
+                                <span class="left">星期日</span>
+                                <span class="right">{$sport.week7}
+                                </span>
+                            </div>
+                        </div>
+                        <div>快走下限40%HRR:{$sport.fast_lower}快走上限70%HRR:{$sport.fast_upper}慢跑下限60%HRR:$sport.slow_lower}慢跑上限85%HRR:{$sport.slow_upper}</div>
+
+                    </div>
+
+                </div>
+              </div>
+<style type="text/css">
+.yundong-about-link{position: relative; display: inline-block; margin-left: 6px; width: 30px}
+.yal-pop{position: absolute; top: -9px; left: 16px; display: none; z-index: 10; width: 160px;}
+.yal-pop .corner{width: 0; height: 0; border:6px solid transparent; display: inline-block; border-right: 6px solid #ccc; overflow: hidden;}
+.yal-pop span{display: inline-block; padding: 10px; border:1px solid #ccc; background: #fff; border-radius: 4px; text-decoration: underline; font-size: 12px;}
+.yundong-about-link:hover .yal-pop{display: inline-block;}
+</style>
+              <div class="tab3 tab_body">
+                <div class="inner">
+                    <div class="tl-c">
+                        <img src="__PUBLIC__/images/kaishiyundong.png" width="700px;"/>
+                    </div>
+                    <div class="tab-show-area" id="tab_show_area" style="margin-top:40px;">
+                        <ul>
+                          <li>
+                            <div class="title-area clearfix">
+                              <span class="fl-l">
+                                  <span class="vl-m">热身活动</span>
+                                  <a href="index.html" class="yundong-about-link">
+                                    <img src="__PUBLIC__/images/iconfont-wenhao.png" width="16px;"  class="vl-m" />
+                                    <span class="yal-pop">
+                                        <em class="corner"></em><span>关于热身运动？</span>
+                                    </span>
+                                  </a>
+                              </span>
+                              <span class="fl-r ico">+</span>
+                            </div>
+                            <div class="show-item">
+                              <p class="yundong-style">我们推荐您以下热身的动作，每个动作30秒-1分钟，做的过程中稍用力，以到微微发汗的程度。每次热身可以任意选取4-8个动作。这些热身动作也可用作上班间隙缓解疲劳的动作。
+                              <a href="index.html" class="td-u">了解更多热身运动</a>
+                              </p>
+                              <a href="index.html">
+                                <img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" />
+                              </a>
+                              <a href="index.html">
+                                <img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" />
+                              </a>
+                              <a href="index.html">
+                                <img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" />
+                              </a>
+                              <a href="index.html">
+                                <img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" />
+                              </a>
+                              <a href="index.html">
+                                <img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" />
+                              </a>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="title-area clearfix">
+                              <span class="fl-l">
+                                <span class="vl-m">有氧运动</span>
+                                <a href="index.html" class="yundong-about-link">
+                                    <img src="__PUBLIC__/images/iconfont-wenhao.png" width="16px;"  class="vl-m" />
+                                    <span class="yal-pop">
+                                        <em class="corner"></em><span>关于有氧运动？</span>
+                                    </span>
+                                </a>
+                              </span>
+                              <span class="fl-r ico">+</span>
+                            </div>
+                            <div class="show-item">
+                                <p class="yundong-style">以下运动方式都是经过验证的非常有效有氧运动，您可以根据个人喜好及外部条件进行选择。下面我们将详细逐一介绍这些运动的要点<a href="index.html" class="td-u">了解更多热身运动</a>
+                                </p>
+                                <a href="index.html">
+                                    <img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" />
+                                  </a>
+                                  <a href="index.html">
+                                    <img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" />
+                                  </a>
+                                  <a href="index.html">
+                                    <img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" />
+                                  </a>
+                                  <a href="index.html">
+                                    <img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" />
+                                  </a>
+                                  <a href="index.html">
+                                    <img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" />
+                                  </a>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="title-area clearfix">
+                              <span class="fl-l">
+                                <span class="vl-m">力量运动</span>
+                                <a href="" class="yundong-about-link">
+                                    <img src="__PUBLIC__/images/iconfont-wenhao.png" width="16px;"  class="vl-m" />
+                                    <span class="yal-pop">
+                                        <em class="corner"></em><span>关于力量运动？</span>
+                                    </span>
+                                </a>
+                              </span>
+                              <span class="fl-r ico">+</span>
+                            </div>
+                            <div class="show-item active">
+                              <p  class="yundong-style">根据您个人的日程安排，可以在一次训练课中练习所有大肌群，或者是将身体“分化”成若干部分，每次训练课仅对部分肌群进行练习。只要在一周中，把同一块肌群练习两次即可，时间至少间隔48小时。<a href="index.html" class="td-u">了解更多热身运动</a>
+                              </p>
+                              <p>
+                                <a href="index.html">
+
+                                    <span class="vl-m td-u">上肢肌群</span>
+                                    <span class="yundong-about-link">
+                                        <img src="__PUBLIC__/images/iconfont-wenhao.png" width="16px;"  class="vl-m" />
+                                        <span class="yal-pop">
+                                            <em class="corner"></em><span>关于上肢肌群？</span>
+                                        </span>
+                                    </span>
+                                </a>
+
+                              </p>
+                              <br/>
+                              <a href="index.html"><img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" /></a>
+                              <a href="index.html"><img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" /></a>
+                              <a href="index.html"><img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" /></a>
+                              <a href="index.html"><img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" /></a>
+                              <br/>
+                              <br/>
+                              <p>
+                                <a href="index.html">
+
+                                    <span class="vl-m td-u">核心肌群</span>
+                                    <span class="yundong-about-link">
+                                        <img src="__PUBLIC__/images/iconfont-wenhao.png" width="16px;"  class="vl-m" />
+                                        <span class="yal-pop">
+                                            <em class="corner"></em><span>关于核心肌群？</span>
+                                        </span>
+                                    </span>
+                                </a>
+
+                              </p>
+                              <br/>
+                              <a href="index.html"><img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" /></a>
+                              <a href="index.html"><img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" /></a>
+                              <a href="index.html"><img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" /></a>
+                              <a href="index.html"><img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" /></a>
+                              <br/>
+                              <br/>
+                              <p>
+                                <a href="index.html">
+
+                                    <span class="vl-m td-u">下肢肌群</span>
+                                    <span class="yundong-about-link">
+                                        <img src="__PUBLIC__/images/iconfont-wenhao.png" width="16px;"  class="vl-m" />
+                                        <span class="yal-pop">
+                                            <em class="corner"></em><span>关于下肢肌群？</span>
+                                        </span>
+                                    </span>
+                                </a>
+
+                              </p>
+                              <br/>
+                              <a href="index.html"><img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" /></a>
+                              <a href="index.html"><img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" /></a>
+                              <a href="index.html"><img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" /></a>
+                              <a href="index.html"><img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" /></a>
+
+                            </div>
+                          </li>
+                          <li>
+                            <div class="title-area clearfix">
+                              <span class="fl-l">
+                                <span class="vl-m">拉伸运动</span>
+                                <a href="index.html" class="yundong-about-link">
+                                    <img src="__PUBLIC__/images/iconfont-wenhao.png" width="16px;"  class="vl-m" />
+                                    <span class="yal-pop">
+                                        <em class="corner"></em><span>关于拉伸运动？</span>
+                                    </span>
+                                </a>
+                              </span>
+                              <span class="fl-r ico">+</span>
+                            </div>
+                            <div class="show-item">
+                              <p  class="yundong-style">下面是拉伸的动作，方法是静态拉伸，不要上下弹动。每个部分重复2到3次，每次维持15到30秒钟。
+                              <a href="index.html" class="td-u">了解更多热身运动</a>
+                              </p>
+                              <a href="index.html">
+                                <img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" />
+                              </a>
+                              <a href="index.html">
+                                <img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" />
+                              </a>
+                              <a href="index.html">
+                                <img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" />
+                              </a>
+                              <a href="index.html">
+                                <img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" />
+                              </a>
+                              <a href="index.html">
+                                <img src="img/wedo/u205.png" style="width:120px; margin-right:20px;" />
+                              </a>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+
+                </div>
+              </div>
+<style type="text/css">
+.yundong-tab li{position: relative; overflow: visible; margin-left: 40px;}
+.yundong-icos{display: inline-block; width: 30px; height: 31px; background: url(__PUBLIC__/images/yundong-icos.png) 0 0 no-repeat; position: absolute; left: 4px; top: 3px;}
+.yundong-icos.xingbie{background-position: 0 -40px;}
+.yundong-icos.xingti{background-position: 0 -81px;}
+.yundong-icos.waibu{background-position: 0 -122px;}
+.yundong-icos.jindu{background-position: 0 -163px;}
+.yundong-icos.bushui{background-position: 0 -204px;}
+.yundong-icos.xizao{background-position: 0 -245px;}
+.yundong-icos.buchong{background-position: 0 -286px;}
+.yundong-tab .title-area{padding-left: 42px;}
+</style>
+              <div class="tab4 tab_body">
+                <div class="inner">
+                    <h4 class="yundong-title">注意事项</h4>
+                    <div class="yundong-tab tab-show-area" id="tab_show_area" style="margin-top:40px;">
+                        <ul>
+                          <li>
+                            <em class="yundong-icos"></em>
+                            <div class="title-area clearfix">
+                              <span class="fl-l">饮食</span>
+                              <span class="fl-r ico">+</span>
+                            </div>
+                            <div class="show-item active">
+                              <p class="yundong-style">不要在饭后立即进行剧烈运动，剧烈运动时机体血液重新分配，皮肤和肌肉血流量增多，胃肠道和消化腺体血流量减少，消化吸收能力减弱。如果胃内食物过多，运动时可引起胃震荡，进而引发恶心、呕吐、腹痛。运动结束后一定时间内，胃肠道血液才会逐步增多恢复正常。因此，运动后至少休息30分钟再进食，大强度运动后应休息40-60分钟再进食。
+                              </p>
+                            </div>
+                          </li>
+                          <li>
+                            <em class="yundong-icos xingbie"></em>
+                            <div class="title-area clearfix">
+                              <span class="fl-l">性别</span>
+                              <span class="fl-r ico">+</span>
+                            </div>
+                            <div class="show-item">
+                                <p class="yundong-style">男性肌肉收缩力量大，速度快，参加体育活动时竞争意识强，常常由于运动过于剧烈导致各种运动损伤。女性肌肉力量较弱，运动时对关节的保护作用较差，在参加相同强度的体育活动时，发生关节损伤的几率高于男性。另外，女性的雌激素呈周期性分泌，雌性激素分泌降低与骨质疏松、疲劳性骨折发生较多有关。</p>
+                            </div>
+                          </li>
+                          <li>
+                            <em class="yundong-icos xingti"></em>
+                            <div class="title-area clearfix">
+                              <span class="fl-l">体形</span>
+                              <span class="fl-r ico">+</span>
+                            </div>
+                            <div class="show-item">
+                              <p  class="yundong-style">
+                                体重过重或肥胖者，体内脂肪含量较高，运动时会额外增加肌体的运动负担。肥胖人群不妨选择游泳、自行车等器械进行热身，以让关节受到的冲击力下降。
+                              </p>
+                            </div>
+                          </li>
+                          <li>
+                            <em class="yundong-icos waibu"></em>
+                            <div class="title-area clearfix">
+                              <span class="fl-l">外部环境</span>
+                              <span class="fl-r ico">+</span>
+                            </div>
+                            <div class="show-item">
+                              <p  class="yundong-style">体育场地不平坦，光线不好，运动器械质量不高，或安装不牢固、环境温度过高或过低、运动服装和运动鞋不合适等都属于运动伤害外在风险因素。
+                              </p>
+                            </div>
+                          </li>
+
+                          <li>
+                            <em class="yundong-icos jindu"></em>
+                            <div class="title-area clearfix">
+                              <span class="fl-l">运动进度</span>
+                              <span class="fl-r ico">+</span>
+                            </div>
+                            <div class="show-item">
+                              <p  class="yundong-style">循序渐进的增加运动强度，同时监控运动强度。监测自己的心率，持在目标心率范围内，如果经济条件允许，可使用电子心率计。避免下列情况出现：做静力练习的同时憋气、负荷过重、心律失常。
+                              </p>
+                            </div>
+                          </li>
+
+                          <li>
+                            <em class="yundong-icos bushui"></em>
+                            <div class="title-area clearfix">
+                              <span class="fl-l">运动中补水</span>
+                              <span class="fl-r ico">+</span>
+                            </div>
+                            <div class="show-item">
+                              <p  class="yundong-style">运动中补水：运动量小，出含量少，补充白开水、矿泉水或其他饮料均可：运动量大，出汗多，应补充含盐的运动饮料，菜汤等
+                              </p>
+                            </div>
+                          </li>
+
+                          <li>
+                            <em class="yundong-icos xizao"></em>
+                            <div class="title-area clearfix">
+                              <span class="fl-l">洗澡</span>
+                              <span class="fl-r ico">+</span>
+                            </div>
+                            <div class="show-item">
+                              <p  class="yundong-style">训练后别急于洗澡，稍微休息一下，等不再出汗的时候再温水洗澡。
+                              </p>
+                            </div>
+                          </li>
+
+                          <li>
+                            <em class="yundong-icos buchong"></em>
+                            <div class="title-area clearfix">
+                              <span class="fl-l">运动后营养补充</span>
+                              <span class="fl-r ico">+</span>
+                            </div>
+                            <div class="show-item">
+                              <p  class="yundong-style">通常在运动完后要补充一小餐。主要补充少量的蛋白质、高升糖指数的碳水化合物、矿物质等。
+                              </p>
+                            </div>
+                          </li>
+
+
+                        </ul>
+                      </div>
+                </div>
+              </div>
+
+              <div class="tab5 tab_body">
+                <div class="inner" style="padding-top:20px;">
+                    <h4 class="yundong-title">运动损伤及应对措施</h4>
+                    <div class="tab-show-area" id="tab_show_area" style="margin-top:40px;">
+                        <ul>
+                          <li>
+                            <div class="title-area clearfix">
+                              <span class="fl-l">运动后 延迟性肌肉损伤</span>
+                              <span class="fl-r ico">+</span>
+                            </div>
+                            <div class="show-item active">
+                                <p class="yundong-style">延迟性肌肉酸痛是指运动结束12-48小时后感觉到的肌肉又酸又疼的症状。<br/><br/>
+                                <b>【现象分析】</b><br/>
+                                  通常发生在刚开始一项新运动、运动项目改变或锻炼持续时间或强度有显著提高时。这种酸疼是对非常规运动量的一个正常反应，是肌肉修复和构建更大耐力和强度的一种自适应过程。酸疼在运动后两天到达顶点，之后的若干天逐步消减。<br/><br/>
+                                <b>【对应措施】</b><br/>
+                                  运动前做全面热身，运动后做整理拉伸，可以有效消除肌肉酸痛。<br/>
+                                温和按摩患处。研究发现按摩能大概减缓30%的肌肉酸痛并减少肿胀。</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="title-area clearfix">
+                              <span class="fl-l">运动后 膝关节、踝关节痛</span>
+                              <span class="fl-r ico">+</span>
+                            </div>
+                            <div class="show-item">
+                              <p  class="yundong-style">
+                                <b>【现象分析】</b><br/>
+                                  引起膝关节疼痛的原因有很多，关节不稳、僵硬或下肢力线不正。所谓运动磨损膝盖其实并不科学，膝盖周围肌肉无力是运动中关节缺乏稳定的根本原因，肌力和协调性跟不上的话，跑步便会对膝关节的半月板、软骨形成震荡损伤。<br/><br/>
+                                <b>【预防措施】</b><br/>
+                                  水泥地的表面最坚硬不可忽视其反作用力，最好不要在人行道上慢跑。<br/>
+                                  定期更换跑鞋.当跑鞋失去弹性而无法再承受反作用力后，应立即换鞋。<br/>
+                                  议在跑步前先进行加强大腿肌肉的力量练习。<br/><br/>
+                                <b>【对应措施】</b><br/>
+                                  开始快走初期，有可能经历脚疼、腿疼、膝盖不适等各种反应，可以放慢速度，如果还感觉疼痛不适，就休息一下，暂时不要运动，休息到疼痛减弱或者消失为止。<br/>
+                                  运动时若发生膝盖疼痛，可以立即用冰块冰敷，并抬高患部20至30分钟。冰块是极佳的消炎剂，最好在当天晚上或隔天早晨起床时，再以冰块敷一次。<br/><br/>
+                                <b>【其他】</b><br/>
+                                  针对现在流行的运动护具，护膝什么的最好不戴。只有受伤的人需要戴，我们普通人能不戴就不戴。道理很简单，必须让你的膝盖去适应外界这个冲击，膝盖才能有劲。
+                              </p>
+                            </div>
+                          </li>
+
+                        </ul>
+                    </div>
+                </div>
+              </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#wrapper_tab .tab_link').click(function() {
+            if ($(this).attr('class') != $('#wrapper_tab').attr('class') ) {
+                $('#wrapper_tab').attr('class',$(this).attr('class'));
+            }
+            return false;
+        });
+
+        $('.yundong-about-link').click(function(event){
+            event.stopPropagation();
+        });
+
+        $('#begin_yundong').click(function(){
+            $('#wrapper_tab .tab2').click();
+            return false;
+        });
+
+        $('#yundong_jihua_title').click(function(){
+            $('#wrapper_tab .tab3').click();
+            return false;
+        });
+        $('.tab-show-area .title-area').click(function(){
+          //$('#tab_show_area').find('li').removeClass('active');
+          if( $(this).parent().find('.show-item').hasClass('active') ){
+            return false;
+          }
+
+          $('.tab-show-area').find('.show-item').removeClass('active');
+          $('.tab-show-area').find('.show-item').slideUp();
+          $('.tab-show-area').find('.ico').html('+');
+          $(this).parent().find('.show-item').slideDown();//('active');
+          $(this).find('.ico').html('-');
+
+          //event.stopPropagation();
+          return false;
+
+        });
+    });
+</script>
+<include file="Public:footer" />
+
+</body>
+</html>

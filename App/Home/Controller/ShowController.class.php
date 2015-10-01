@@ -65,7 +65,11 @@ class ShowController extends HomeCommonController{
 		$this->assign('commentflag', $content['commentflag']);//是否允许评论,debug,以后加上个全局评价 $content['commentflag'] && CFG_Comment
 		$this->assign('tablename', $self['tablename']);
 		$this->assign('id', $id);
-
+                if($cid==1){
+                    $this->assign('mid', 4);
+                }else{
+                    $this->assign('mid', 3);
+                }
 		
 
 		switch ($self['tablename']) {			

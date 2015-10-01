@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<title>{$title}-<yang:sitename /></title>
+<link href="__PUBLIC__/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="__PUBLIC__/css/edit.css" rel="stylesheet" type="text/css" media="all" />
+ <link href="__PUBLIC__/css/center.css" rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js" ></script>
+
+
+</head>
+
+<body>
+<include file="Public:header" />
+<div class="acc-center acc-center-new">
+    <div class="wrap">
+
+        <div class="acc-center-container">
+            <div class="simple-intro clearfix" style="padding-bottom:10px; border-bottom:1px solid #ccc;">
+                <a class="btn default-btn" style="padding:4px 10px;" href="javascript();" onclick="history.go(-1)">&lt; 返回</a> |
+                <h4 style="display:inline-block;">
+                    {$result.disease_name}
+                </h4>
+
+                <a class="btn default-btn fl-r" style="padding:4px 10px;" href="{$result.disease_url}" target="_blank">疾病详情</a>
+
+
+            </div>
+
+            <div id="wrapper_tab">
+
+              <div class="tab1 tab_body" style="display:block;">
+                <div class="inner">
+                    <div class="simple-intro" style="padding-right:100px;">
+                        <h4>与疾病相关的基因信息</h4>
+                        <p>{$result.disease_des}</p>
+                        <div style="height:40px;"></div>
+                        <h4>基因检测的参考文献</h4>
+                        <p>{$result.disease_paper}</p>
+                    </div>
+                </div>
+              </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<include file="Public:footer" />
+
+</body>
+</html>

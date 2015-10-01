@@ -19,16 +19,15 @@ $(function(){
 <div class="header_bg">
     <div class="wrap">
         <div id="content">
-            <header id="topnav">
-                <nav class="clearfix">
+            <div id="topnav">
+                <div class="nav clearfix">
                     <ul class="fl-l">
-                        <li class="m"><a  href="index.php">首页</a></li>
-                        <li class="m"><a  href="products.html">产品服务</a></li>
-                        <li class="m"><a href="{:U(MODULE_NAME.'/Member/index')}">用户中心</a></li>
-                        <li class="m"><a  href="{:U(MODULE_NAME.'/About/index')}">关于我们</a></li>
-                        <li class="m"><a  href="{:U(MODULE_NAME.'/List/index/cid/1')}" >健康知识</a></li>
-                        <li class="m"><a  class="scroll" href="#contact">联系预约</a></li>
-                        <div class="clear"> </div>
+                        <li <if condition="$mid eq 1">  class="active" </if>><a href="index.php">首页</a></li>
+                        <li <if condition="$mid eq 2">  class="active" </if>><a href="{:U(MODULE_NAME.'/Product/index')}">产品服务</a></li>
+                        <li <if condition="$mid eq 3">  class="active" </if>><a href="{:U(MODULE_NAME.'/Member/index')}">用户中心</a></li>
+                        <li <if condition="$mid eq 4">  class="active" </if>><a href="{:U(MODULE_NAME.'/List/index/cid/1')}">健康知识</a></li>
+                        <li <if condition="$mid eq 5">  class="active" </if>><a href="{:U(MODULE_NAME.'/About/index')}">关于我们</a></li>
+                        <div class="clear"></div>
                     </ul>
                     <div class="nav-login-area fl-r"  id="top_login_no">
                         <a href="{:U(MODULE_NAME.'/Public/login')}">登录</a>|<a href="{:U(MODULE_NAME.'/Public/register')}">注册</a>
@@ -36,11 +35,10 @@ $(function(){
                     <div class="nav-login-area fl-r" id="top_login_ok" style="display:none;">
                         <a href="{:U(MODULE_NAME.'/Public/logout')}">安全退出</a>
                     </div>  
-                </nav>
-                <div class="logo"><a href="index.php"><img src="__PUBLIC__/images/u-logo2.png"/></a></div>              
+                </div>
+                <div class="logo"><a href="index.php"><img src="__PUBLIC__/images/u-logo2.png"/></a></div>
                 <div class="clear"> </div>
-            </header><!-- @end #topnav -->
-            <script type="text/javascript"  src="__PUBLIC__/js/menu.js"></script>
+            </div><!-- @end #topnav -->
         </div>
     </div>
 </div>

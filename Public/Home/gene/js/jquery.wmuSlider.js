@@ -24,7 +24,7 @@
             previousText: 'Previous',
             nextText: 'Next',
             touch: false,
-            slide: 'article',
+            slide: '.article',
             items: 1
         };
         var options = $.extend(defaults, options);
@@ -56,10 +56,12 @@
                 if (options.animation == 'fade') {
                     slides.css({
                         position: 'absolute',
-                        opacity: 0
+                        opacity: 0,
+                        filter:'Alpha(opacity=0)'
+
                     });
                     slide.css('position', 'relative');
-                    slide.animate({ opacity:1 }, options.animationDuration, function() {
+                    slide.animate({ opacity:1,filter:'Alpha(opacity=100)' }, options.animationDuration, function() {
                         isAnimating = false;
                     });
                 } else if (options.animation == 'slide') {
@@ -240,7 +242,8 @@
                     slides.css({
                         position: 'absolute',
                         width: '100%',
-                        opacity: 0
+                        opacity: 0,
+                        filter:'Alpha(opacity=0)'
                     });
                     $(slides[currentIndex]).css('position', 'relative');
                 } else if (options.animation == 'slide') {

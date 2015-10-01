@@ -7,6 +7,7 @@ class IndexController extends HomeCommonController{
 	public function index(){
 		//go_mobile();
 		$this->assign('title', C('CFG_WEBNAME'));
+                $this->assign('mid', 1);
 		$this->display();
 
 	}

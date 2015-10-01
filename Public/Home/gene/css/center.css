@@ -15,9 +15,9 @@
 .acc-center-container{border-left: 1px solid #485460; min-height: 600px; padding: 20px; padding-top: 40px;}
 
 .simple-intro{font-size: 14px; line-height: 1.5; color: #333;}
-.simple-intro b{font-weight: bold; color: #49CBCD;}
-.simple-intro a.link{color: #49CBCD; text-decoration: underline;}
-.simple-intro h4{font-size: 20px; font-weight: bold; color: #333;}
+.simple-intro b{font-weight: bold; color: #4ebdbf;}
+.simple-intro a.link{color: #4ebdbf; text-decoration: underline;}
+.simple-intro h4{font-size: 20px; color: #333;}
 
 .acc-form-area .container{width: 600px; margin: 0 auto;}
 .acc-form-area .service-title{
@@ -47,3 +47,46 @@ th{
   border-bottom: 1px solid #a8dade;
 }
 td.bg, th.bg{background: #f7f7f7;}
+
+/* 新的个人中心 */
+.acc-center-new{padding-top: 40px;}
+.acc-center-table td{width: auto;}
+.acc-center-table .img-container{height:62px;}
+.acc-center-table .img-container .item{display: inline-block; width: 62px; height: 62px; margin-right: 30px;
+background: url(../images/acc-center-ico.png) 0 0 no-repeat;
+-webkit-transition: 0.5s all;
+  -moz-transition: 0.5s all;
+  -o-transition: 0.5s all;}
+.acc-center-table .img-container .item.yinyang{background-position: -89px 0;}
+.acc-center-table .img-container .item.yundong{background-position: -178px 0;}
+.acc-center-table .img-container.has-no .jiance{background-position: 0 -72px;}
+.acc-center-table .img-container.has-no .yinyang{background-position: -89px -72px;}
+.acc-center-table .img-container.has-no .yundong{background-position: -178px -72px;}
+.acc-center-table .img-container .item{
+}
+
+.acc-center-table .img-container .item:hover{-webkit-transform: scale(1.06) translateY(-5px);
+  -moz-transform: scale(1.06) translateY(-5px);
+  -o-transform: scale(1.06) translateY(-5px);
+  -ms-transform: scale(1.06) translateY(-5px);
+  transform: scale(1.06) translateY(-5px);
+  z-index: 12;}
+.acc-center-table .img-container.has-no .item:hover{-webkit-transform: scale(1) translateY(0);
+-moz-transform: scale(1) translateY(0);
+-o-transform: scale(1) translateY(0);
+-ms-transform: scale(1) translateY(0);
+transform: scale(1) translateY(0);
+}
+
+.avator-area{float: left; width: 160px; height: 160px; border:2px solid #4ebdbf; overflow: hidden; border-radius: 6px; margin-right: 20px; position: relative; cursor: pointer;}
+.avator-area .img-area{background:url(../images/avator-ico.png) 0 -160px no-repeat;
+    width:100%; height:100%;}
+.avator-area .img-area img{width: 100%; height: 100%;}
+.add-img-ico{width: 100%; height: 100%; position: absolute; left: 0; top: 0;background:url(../images/avator-ico.png) 0 0 no-repeat; display: none;}
+.avator-area:hover .add-img-ico{display: block;}
+.has-buy-title{padding: 10px; background: #f5f5f5; margin: 20px 0;}
+
+.acc-center-new .wrap{padding: 0; width: 1000px; min-height: 600px;}
+
+.acc-center-new .acc-center-container{border:0 none;}
+.acc-center-new .cookie-area{border-top: 0 none; border-bottom: 1px solid #eee; padding-bottom: 10px;}

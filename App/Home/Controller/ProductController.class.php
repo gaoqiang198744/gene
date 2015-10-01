@@ -2,12 +2,12 @@
 
 namespace Home\Controller;
 
-class AboutController extends HomeCommonController{
+class ProductController extends HomeCommonController{
 	//方法：index
 	public function index(){
 		//go_mobile();
 		$this->assign('title', C('CFG_WEBNAME'));
-                $this->assign('mid', 5);
+                $this->assign('mid',2);
 		$this->display();
 
 	}

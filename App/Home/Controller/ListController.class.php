@@ -44,6 +44,11 @@ class ListController extends HomeCommonController{
 		$this->assign('keywords', $self['keywords']);
 		$this->assign('description', $self['description']);
 		$this->assign('cid', $cid);
+                if($cid==1){
+                    $this->assign('mid', 4);
+                }else{
+                    $this->assign('mid', 3);
+                }
 		
 		// $patterns = array('/^List_/', '/'.C('TMPL_TEMPLATE_SUFFIX').'$/');
 		$patterns = array('/'.C('TMPL_TEMPLATE_SUFFIX').'$/');
